@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)file:///C:/Users/elif.karatas/Downloads/sql-soru-bankasi.html -->
+<html lang="tr" data-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Soru Bankası</title>
+  <link href="./sql-soru-bankasi_files/css2" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    [data-theme="dark"] {
+      --bg:#0f1117; --surface:#1a1d27; --surface2:#22263a; --border:#2e3250;
+      --ink:#f0f1f8; --mid:#9ca3c8; --light:#5c6490;
+      --accent:#7c6fef; --accent2:#56cfb2;
+      --green:#4ade80; --green-bg:rgba(74,222,128,0.12);
+      --red:#f87171; --red-bg:rgba(248,113,113,0.12);
+      --yellow:#fbbf24; --yellow-bg:rgba(251,191,36,0.12);
+      --code-bg:#0d1117; --shadow:rgba(0,0,0,0.5);
+    }
+    [data-theme="light"] {
+      --bg:#f4f5f7; --surface:#ffffff; --surface2:#f0f1f6; --border:#e2e3ea;
+      --ink:#1a1a2e; --mid:#555570; --light:#9999aa;
+      --accent:#6c63ff; --accent2:#38bfa1;
+      --green:#16a34a; --green-bg:rgba(22,163,74,0.1);
+      --red:#dc2626; --red-bg:rgba(220,38,38,0.1);
+      --yellow:#d97706; --yellow-bg:rgba(217,119,6,0.1);
+      --code-bg:#f1f3f5; --shadow:rgba(0,0,0,0.1);
+    }
+
+    body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--ink); min-height:100vh; transition:background .3s,color .3s; }
+
+    /* HEADER */
+    header { background:var(--surface); border-bottom:1px solid var(--border); padding:1rem 2rem; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:50; }
+    .header-logo { display:flex; align-items:center; gap:.75rem; }
+    .logo-badge { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; font-weight:700; font-size:.8rem; padding:.4rem .8rem; border-radius:8px; font-family:'Fira Code',monospace; }
+    .header-title { font-size:1rem; font-weight:600; color:var(--ink); }
+    .header-sub { font-size:.75rem; color:var(--light); }
+    .header-right { display:flex; align-items:center; gap:.75rem; }
+    .score-pill { background:var(--surface2); border:1px solid var(--border); border-radius:20px; padding:.35rem 1rem; font-size:.8rem; font-weight:600; color:var(--mid); }
+    .score-pill span { color:var(--green); }
+    .btn { display:inline-flex; align-items:center; gap:.4rem; border-radius:8px; padding:.4rem .9rem; cursor:pointer; font-size:.78rem; font-weight:600; border:none; transition:all .2s; font-family:inherit; }
+    .btn-ghost { background:var(--surface2); border:1px solid var(--border); color:var(--mid); }
+    .btn-ghost:hover { color:var(--ink); border-color:var(--accent); }
+    .btn-accent { background:var(--accent); color:#fff; }
+    .btn-accent:hover { opacity:.88; }
+    .btn-danger { background:var(--red-bg); border:1px solid var(--red); color:var(--red); }
+    .btn-danger:hover { background:var(--red); color:#fff; }
+
+    /* MAIN */
+    main { max-width:900px; margin:0 auto; padding:2rem; }
+
+    /* TAB BAR */
+    .tabs { display:flex; gap:.5rem; margin-bottom:2rem; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:.4rem; }
+    .tab { flex:1; text-align:center; padding:.6rem; border-radius:7px; font-size:.82rem; font-weight:600; cursor:pointer; transition:all .2s; color:var(--mid); border:none; background:none; font-family:inherit; }
+    .tab.active { background:var(--accent); color:#fff; }
+    .tab:hover:not(.active) { background:var(--surface2); color:var(--ink); }
+
+    /* STATS BAR */
+    .stats-bar { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:2rem; }
+    .stat-mini { background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:1rem; text-align:center; }
+    .stat-mini-val { font-size:1.6rem; font-weight:700; color:var(--ink); }
+    .stat-mini-val.green { color:var(--green); }
+    .stat-mini-val.red { color:var(--red); }
+    .stat-mini-val.yellow { color:var(--yellow); }
+    .stat-mini-label { font-size:.72rem; color:var(--light); margin-top:.25rem; }
+
+    /* SORU KARTI */
+    .soru-card { background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:2rem; margin-bottom:1.5rem; }
+    .soru-meta { display:flex; align-items:center; gap:.75rem; margin-bottom:1.25rem; flex-wrap:wrap; }
+    .soru-num { font-size:.75rem; font-weight:600; color:var(--light); font-family:'Fira Code',monospace; }
+    .seviye-badge { font-size:.7rem; font-weight:700; padding:.25rem .65rem; border-radius:20px; }
+    .seviye-badge.baslangic { background:var(--green-bg); color:var(--green); }
+    .seviye-badge.orta { background:var(--yellow-bg); color:var(--yellow); }
+    .seviye-badge.ileri { background:var(--red-bg); color:var(--red); }
+    .konu-badge { font-size:.7rem; font-weight:600; padding:.25rem .65rem; border-radius:20px; background:rgba(124,111,239,.12); color:var(--accent); }
+    .soru-text { font-size:1rem; font-weight:500; color:var(--ink); line-height:1.65; margin-bottom:1.5rem; }
+
+    /* KOD BLOĞU */
+    .code-block { background:var(--code-bg); border:1px solid var(--border); border-radius:8px; padding:1rem 1.25rem; margin-bottom:1.5rem; font-family:'Fira Code',monospace; font-size:.85rem; color:#a9b7d6; line-height:1.7; overflow-x:auto; }
+    .kw { color:#7c6fef; } /* keyword */
+    .fn { color:#56cfb2; } /* function */
+    .str { color:#fbbf24; } /* string */
+    .num { color:#f87171; } /* number */
+    .cm { color:#5c6490; font-style:italic; } /* comment */
+
+    /* SEÇENEKLER */
+    .secenekler { display:flex; flex-direction:column; gap:.75rem; margin-bottom:1.5rem; }
+    .secenek { display:flex; align-items:flex-start; gap:.75rem; padding:1rem 1.25rem; border:1.5px solid var(--border); border-radius:10px; cursor:pointer; transition:all .2s; background:var(--surface2); }
+    .secenek:hover:not(.disabled) { border-color:var(--accent); background:rgba(124,111,239,.06); }
+    .secenek.selected { border-color:var(--accent); background:rgba(124,111,239,.1); }
+    .secenek.correct { border-color:var(--green); background:var(--green-bg); }
+    .secenek.wrong { border-color:var(--red); background:var(--red-bg); }
+    .secenek.disabled { cursor:default; }
+    .secenek-harf { width:28px; height:28px; border-radius:6px; background:var(--border); display:flex; align-items:center; justify-content:center; font-size:.78rem; font-weight:700; color:var(--mid); flex-shrink:0; transition:all .2s; font-family:'Fira Code',monospace; }
+    .secenek.selected .secenek-harf { background:var(--accent); color:#fff; }
+    .secenek.correct .secenek-harf { background:var(--green); color:#fff; }
+    .secenek.wrong .secenek-harf { background:var(--red); color:#fff; }
+    .secenek-text { font-size:.9rem; color:var(--mid); line-height:1.5; font-family:'Fira Code',monospace; }
+    .secenek.correct .secenek-text, .secenek.wrong .secenek-text { color:var(--ink); }
+
+    /* SONUÇ */
+    .sonuc { display:none; padding:1rem 1.25rem; border-radius:10px; margin-bottom:1.5rem; }
+    .sonuc.show { display:block; }
+    .sonuc.dogru { background:var(--green-bg); border:1px solid var(--green); }
+    .sonuc.yanlis { background:var(--red-bg); border:1px solid var(--red); }
+    .sonuc-baslik { font-size:.9rem; font-weight:700; margin-bottom:.5rem; }
+    .sonuc.dogru .sonuc-baslik { color:var(--green); }
+    .sonuc.yanlis .sonuc-baslik { color:var(--red); }
+    .sonuc-aciklama { font-size:.85rem; color:var(--mid); line-height:1.7; }
+
+    /* AKSIYON */
+    .soru-actions { display:flex; gap:.75rem; align-items:center; flex-wrap:wrap; }
+    .progress-bar { flex:1; height:6px; background:var(--border); border-radius:3px; overflow:hidden; min-width:100px; }
+    .progress-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:3px; transition:width .4s; }
+
+    /* SINAV MODU */
+    .sinav-header { background:var(--red-bg); border:1px solid var(--red); border-radius:10px; padding:1rem 1.5rem; margin-bottom:1.5rem; display:flex; align-items:center; justify-content:space-between; }
+    .sinav-timer { font-family:'Fira Code',monospace; font-size:1.5rem; font-weight:700; color:var(--red); }
+    .sinav-info { font-size:.82rem; color:var(--red); }
+    .sinav-timer.warning { animation:pulse .5s infinite alternate; }
+    @keyframes pulse { from{opacity:1} to{opacity:.5} }
+
+    /* SONUÇ EKRANI */
+    .sonuc-ekrani { display:none; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:3rem 2rem; text-align:center; }
+    .sonuc-ekrani.show { display:block; }
+    .sonuc-emoji { font-size:4rem; margin-bottom:1rem; }
+    .sonuc-baslik2 { font-size:1.5rem; font-weight:700; color:var(--ink); margin-bottom:.5rem; }
+    .sonuc-puan { font-size:3rem; font-weight:700; color:var(--accent); margin:1rem 0; }
+    .sonuc-detay { font-size:.9rem; color:var(--mid); margin-bottom:2rem; }
+    .sonuc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:2rem; }
+    .sonuc-mini { background:var(--surface2); border-radius:10px; padding:1rem; }
+    .sonuc-mini-val { font-size:1.5rem; font-weight:700; }
+    .sonuc-mini-label { font-size:.72rem; color:var(--light); margin-top:.25rem; }
+
+    /* FİLTRE */
+    .filtre-bar { display:flex; gap:.75rem; margin-bottom:1.5rem; flex-wrap:wrap; }
+    .filtre-btn { font-size:.78rem; font-weight:600; padding:.4rem .9rem; border-radius:20px; cursor:pointer; border:1.5px solid var(--border); background:var(--surface); color:var(--mid); transition:all .2s; font-family:inherit; }
+    .filtre-btn:hover, .filtre-btn.active { border-color:var(--accent); color:var(--accent); background:rgba(124,111,239,.08); }
+
+    @media(max-width:640px) { main{padding:1rem} .stats-bar{grid-template-columns:repeat(2,1fr)} .sonuc-grid{grid-template-columns:repeat(2,1fr)} }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-logo">
+    <div class="logo-badge">SQL</div>
+    <div>
+      <div class="header-title">SQL Soru Bankası</div>
+      <div class="header-sub">Öğren · Pratik Yap · Test Et</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="score-pill">✅ <span id="dogruSay">0</span> · ❌ <span id="yanlisSay">0</span></div>
+    <button class="btn btn-ghost" id="themeBtn" onclick="toggleTheme()">🌙 Koyu</button>
+  </div>
+</header>
+
+<main>
+
+  <div class="tabs">
+    <button class="tab active" onclick="setMod(&#39;calis&#39;)" id="tabCalis">📚 Çalışma Modu</button>
+    <button class="tab" onclick="setMod(&#39;sinav&#39;)" id="tabSinav">⏱️ Sınav Modu</button>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-mini">
+      <div class="stat-mini-val" id="toplamSoru">20</div>
+      <div class="stat-mini-label">Toplam Soru</div>
+    </div>
+    <div class="stat-mini">
+      <div class="stat-mini-val" id="cozulenSoru">0</div>
+      <div class="stat-mini-label">Çözülen</div>
+    </div>
+    <div class="stat-mini">
+      <div class="stat-mini-val green" id="dogruSoru">0</div>
+      <div class="stat-mini-label">Doğru</div>
+    </div>
+    <div class="stat-mini">
+      <div class="stat-mini-val red" id="yanlisSoru">0</div>
+      <div class="stat-mini-label">Yanlış</div>
+    </div>
+  </div>
+
+  <!-- SINAV HEADER -->
+  <div class="sinav-header" id="sinavHeader" style="display:none">
+    <div>
+      <div class="sinav-info">⏱️ Sınav Modu — 10 Soruluk Test</div>
+      <div class="sinav-info" id="sinavSoru">Soru 1 / 10</div>
+    </div>
+    <div class="sinav-timer" id="sinavTimer">02:00</div>
+  </div>
+
+  <!-- FİLTRE -->
+  <div class="filtre-bar" id="filtreBar">
+    <button class="filtre-btn active" onclick="filtrele(&#39;hepsi&#39;,this)">Hepsi</button>
+    <button class="filtre-btn" onclick="filtrele(&#39;baslangic&#39;,this)">🟢 Başlangıç</button>
+    <button class="filtre-btn" onclick="filtrele(&#39;orta&#39;,this)">🟡 Orta</button>
+    <button class="filtre-btn" onclick="filtrele(&#39;ileri&#39;,this)">🔴 İleri</button>
+    <button class="filtre-btn" onclick="filtrele(&#39;SELECT&#39;,this)">SELECT</button>
+    <button class="filtre-btn" onclick="filtrele(&#39;WHERE&#39;,this)">WHERE</button>
+    <button class="filtre-btn" onclick="filtrele(&#39;JOIN&#39;,this)">JOIN</button>
+    <button class="filtre-btn" onclick="filtrele(&#39;GROUP BY&#39;,this)">GROUP BY</button>
+  </div>
+
+  <!-- SORU -->
+  <div id="soruWrap">
+    <div class="soru-card">
+      <div class="soru-meta">
+        <span class="soru-num">SORU 1/20</span>
+        <span class="seviye-badge baslangic">🟢 Başlangıç</span>
+        <span class="konu-badge">SELECT</span>
+      </div>
+      <div class="soru-text">Bir tablodan TÜM sütunları getiren SQL sorgusu hangisidir?</div>
+      
+      <div class="secenekler" id="secenekler">
+        
+          <div class="secenek" onclick="cevapla(0)" id="sec0">
+            <div class="secenek-harf">A</div>
+            <div class="secenek-text">SELECT all FROM tablo</div>
+          </div>
+          <div class="secenek" onclick="cevapla(1)" id="sec1">
+            <div class="secenek-harf">B</div>
+            <div class="secenek-text">SELECT * FROM tablo</div>
+          </div>
+          <div class="secenek" onclick="cevapla(2)" id="sec2">
+            <div class="secenek-harf">C</div>
+            <div class="secenek-text">GET * FROM tablo</div>
+          </div>
+          <div class="secenek" onclick="cevapla(3)" id="sec3">
+            <div class="secenek-harf">D</div>
+            <div class="secenek-text">FETCH all FROM tablo</div>
+          </div>
+      </div>
+      <div class="sonuc" id="sonucDiv"></div>
+      <div class="soru-actions">
+        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+        <button class="btn btn-ghost" id="aciklamaBtn" onclick="aciklamaGoster()" style="display:none">💡 Açıklama</button>
+        <button class="btn btn-accent" id="sonrakiBtn" onclick="sonraki()" style="display:none">Sonraki →</button>
+      </div>
+    </div></div>
+
+  <!-- SONUÇ EKRANI -->
+  <div class="sonuc-ekrani" id="sonucEkrani">
+    <div class="sonuc-emoji" id="sonucEmoji">🎉</div>
+    <div class="sonuc-baslik2" id="sonucBaslik">Test Tamamlandı!</div>
+    <div class="sonuc-puan" id="sonucPuan">0/10</div>
+    <div class="sonuc-detay" id="sonucDetay"></div>
+    <div class="sonuc-grid">
+      <div class="sonuc-mini"><div class="sonuc-mini-val" id="sDogru" style="color:var(--green)">0</div><div class="sonuc-mini-label">Doğru</div></div>
+      <div class="sonuc-mini"><div class="sonuc-mini-val" id="sYanlis" style="color:var(--red)">0</div><div class="sonuc-mini-label">Yanlış</div></div>
+      <div class="sonuc-mini"><div class="sonuc-mini-val" id="sSure" style="color:var(--accent)">—</div><div class="sonuc-mini-label">Süre</div></div>
+    </div>
+    <button class="btn btn-accent" onclick="tekrarla()" style="font-size:.9rem;padding:.75rem 2rem">🔄 Tekrar Dene</button>
+  </div>
+
+</main>
+
+<script>
+const sorular = [
+  // BAŞLANGIÇ - SELECT
+  {id:1, seviye:'baslangic', konu:'SELECT', soru:'Bir tablodan TÜM sütunları getiren SQL sorgusu hangisidir?',
+   kod:'', secenekler:['SELECT all FROM tablo','SELECT * FROM tablo','GET * FROM tablo','FETCH all FROM tablo'],
+   dogru:1, aciklama:'SELECT * FROM tablo ifadesi, tablodaki tüm sütunları getirir. * işareti "hepsi" anlamına gelir.'},
+
+  {id:2, seviye:'baslangic', konu:'SELECT', soru:'Sadece "ad" ve "soyad" sütunlarını getiren sorgu hangisidir?',
+   kod:'', secenekler:['SELECT ad, soyad FROM musteriler','SELECT [ad, soyad] FROM musteriler','SHOW ad, soyad FROM musteriler','GET ad AND soyad FROM musteriler'],
+   dogru:0, aciklama:'Belirli sütunları seçmek için sütun adlarını virgülle ayırarak yazarsın: SELECT sutun1, sutun2 FROM tablo'},
+
+  {id:3, seviye:'baslangic', konu:'WHERE', soru:'Sadece Istanbul\'daki müşterileri getiren WHERE koşulu hangisidir?',
+   kod:`<span class="kw">SELECT</span> * <span class="kw">FROM</span> musteriler\n<span class="kw">WHERE</span> ???`,
+   secenekler:["sehir = 'Istanbul'","sehir == 'Istanbul'","sehir LIKE Istanbul","sehir IS 'Istanbul'"],
+   dogru:0, aciklama:"WHERE koşulunda eşitlik için tek = kullanılır. Metin değerler tırnak içinde yazılır: sehir = 'Istanbul'"},
+
+  {id:4, seviye:'baslangic', konu:'WHERE', soru:'Kalite skoru 80\'den büyük ürünleri getiren sorgu hangisidir?',
+   kod:`<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler\n<span class="kw">WHERE</span> ???`,
+   secenekler:['skor > 80','skor >= 80','skor GREATER 80','skor >> 80'],
+   dogru:0, aciklama:'> operatörü "büyüktür" demektir. 80\'den büyük demek 80 dahil değil. 80 dahil olsun istersen >= kullanırsın.'},
+
+  {id:5, seviye:'baslangic', konu:'SELECT', soru:'Sonuçları sadece 5 satırla sınırlamak için ne kullanılır?',
+   kod:`<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler\n???`,
+   secenekler:['LIMIT 5','TOP 5','ROWNUM = 5','FETCH 5'],
+   dogru:0, aciklama:'LIMIT 5 ifadesi sonuç setini 5 satırla sınırlar. MySQL ve PostgreSQL\'de kullanılır. SQL Server\'da TOP 5 kullanılır.'},
+
+  // BAŞLANGIÇ - ORDER BY
+  {id:6, seviye:'baslangic', konu:'ORDER BY', soru:'Ürünleri fiyata göre büyükten küçüğe sıralamak için ne yazılır?',
+   kod:`<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler\n<span class="kw">ORDER BY</span> fiyat ???`,
+   secenekler:['DESC','ASC','DOWN','REVERSE'],
+   dogru:0, aciklama:'DESC (Descending) büyükten küçüğe, ASC (Ascending) küçükten büyüğe sıralar. Varsayılan ASC\'dir.'},
+
+  {id:7, seviye:'baslangic', konu:'WHERE', soru:'Hem "Elektronik" hem "Kitap" kategorisindeki ürünleri getiren sorgu hangisidir?',
+   kod:`<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler\n<span class="kw">WHERE</span> kategori ???`,
+   secenekler:["IN ('Elektronik','Kitap')","= 'Elektronik' AND = 'Kitap'","= 'Elektronik' OR 'Kitap'","BETWEEN 'Elektronik' AND 'Kitap'"],
+   dogru:0, aciklama:'IN operatörü, birden fazla değeri kontrol etmek için kullanılır. WHERE kategori IN (\'A\',\'B\') şeklinde yazılır.'},
+
+  // ORTA - GROUP BY
+  {id:8, seviye:'orta', konu:'GROUP BY', soru:'Her kategorideki ürün sayısını hesaplayan sorgu hangisidir?',
+   kod:'', secenekler:[
+     'SELECT kategori, COUNT(*) FROM urunler GROUP BY kategori',
+     'SELECT kategori, SUM(*) FROM urunler GROUP BY kategori',
+     'SELECT COUNT(*) FROM urunler WHERE kategori',
+     'SELECT kategori FROM urunler COUNT(*)'],
+   dogru:0, aciklama:'GROUP BY ile verileri gruplarız, COUNT(*) ile her gruptaki satır sayısını sayarız. Bu ikili çok sık kullanılır!'},
+
+  {id:9, seviye:'orta', konu:'GROUP BY', soru:'Ortalama kalite skoru 70\'in üzerinde olan kategorileri getiren sorgu hangisidir?',
+   kod:`<span class="kw">SELECT</span> kategori, <span class="fn">AVG</span>(skor)\n<span class="kw">FROM</span> urunler\n<span class="kw">GROUP BY</span> kategori\n??? <span class="fn">AVG</span>(skor) > <span class="num">70</span>`,
+   secenekler:['HAVING','WHERE','FILTER','AND'],
+   dogru:0, aciklama:'GROUP BY sonrası koşul için WHERE değil HAVING kullanılır. WHERE gruplama öncesi, HAVING gruplama sonrası filtreler.'},
+
+  {id:10, seviye:'orta', konu:'GROUP BY', soru:'En yüksek skoru bulan fonksiyon hangisidir?',
+   kod:`<span class="kw">SELECT</span> ???(skor) <span class="kw">FROM</span> urunler`,
+   secenekler:['MAX(skor)','HIGHEST(skor)','TOP(skor)','UPPER(skor)'],
+   dogru:0, aciklama:'MAX() en büyük değeri, MIN() en küçük değeri, AVG() ortalamayı, SUM() toplamı, COUNT() sayıyı döndürür.'},
+
+  // ORTA - JOIN
+  {id:11, seviye:'orta', konu:'JOIN', soru:'İki tabloyu birleştirmek için kullanılan temel komut hangisidir?',
+   kod:`<span class="kw">SELECT</span> u.ad, k.kategori_adi\n<span class="kw">FROM</span> urunler u\n??? kategoriler k <span class="kw">ON</span> u.kategori_id = k.id`,
+   secenekler:['INNER JOIN','CONNECT','MERGE','ATTACH'],
+   dogru:0, aciklama:'INNER JOIN iki tablodaki eşleşen kayıtları getirir. ON ile hangi sütunların eşleşeceği belirtilir.'},
+
+  {id:12, seviye:'orta', konu:'JOIN', soru:'Sol tablodaki tüm kayıtları, sağ tabloda eşleşme olmasa bile getiren JOIN türü hangisidir?',
+   kod:'', secenekler:['LEFT JOIN','INNER JOIN','RIGHT JOIN','FULL JOIN'],
+   dogru:0, aciklama:'LEFT JOIN sol tablodaki TÜM kayıtları getirir. Sağ tabloda eşleşme yoksa NULL döner. Çok kullanılan bir JOIN türüdür!'},
+
+  {id:13, seviye:'orta', konu:'WHERE', soru:'Ürün adı "Pro" ile biten kayıtları getiren sorgu hangisidir?',
+   kod:`<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler\n<span class="kw">WHERE</span> ad ???`,
+   secenekler:["LIKE '%Pro'","LIKE 'Pro%'","ENDS WITH 'Pro'","= '*Pro'"],
+   dogru:0, aciklama:"LIKE '%Pro' ifadesinde % işareti 'herhangi bir şey' demektir. '%Pro' = Pro ile biten, 'Pro%' = Pro ile başlayan, '%Pro%' = Pro içeren."},
+
+  // İLERİ
+  {id:14, seviye:'ileri', konu:'JOIN', soru:'Aşağıdaki sorguda ne döner?',
+   kod:`<span class="kw">SELECT</span> k.kategori_adi, <span class="fn">COUNT</span>(u.id) <span class="kw">AS</span> urun_sayisi\n<span class="kw">FROM</span> kategoriler k\n<span class="kw">LEFT JOIN</span> urunler u <span class="kw">ON</span> k.id = u.kategori_id\n<span class="kw">GROUP BY</span> k.kategori_adi\n<span class="kw">ORDER BY</span> urun_sayisi <span class="kw">DESC</span>`,
+   secenekler:[
+     'Her kategorideki ürün sayısı, çoktan aza sıralı (ürünsüz kategoriler de dahil)',
+     'Sadece ürünü olan kategoriler ve ürün sayıları',
+     'Tüm ürünlerin toplam sayısı',
+     'Kategorilerin alfabetik listesi'],
+   dogru:0, aciklama:'LEFT JOIN sayesinde ürünsüz kategoriler de gelir (COUNT=0). GROUP BY kategori bazında gruplar. ORDER BY DESC çoktan aza sıralar.'},
+
+  {id:15, seviye:'ileri', konu:'GROUP BY', soru:'HAVING ile WHERE arasındaki temel fark nedir?',
+   kod:'', secenekler:[
+     'WHERE satırları gruplamadan önce, HAVING gruplamadan sonra filtreler',
+     'WHERE sadece sayısal, HAVING sadece metin için kullanılır',
+     'HAVING daha hızlı çalışır',
+     'Aralarında fark yoktur, ikisi de aynı şeyi yapar'],
+   dogru:0, aciklama:'WHERE → gruplama öncesi satırları filtreler. HAVING → gruplama sonrası grupları filtreler. Aggregate fonksiyonlarla (COUNT, AVG vb.) HAVING kullanılır.'},
+
+  {id:16, seviye:'ileri', konu:'SELECT', soru:'NULL değer kontrolü için doğru kullanım hangisidir?',
+   kod:`<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler\n<span class="kw">WHERE</span> aciklama ???`,
+   secenekler:['IS NULL','= NULL','== NULL','EQUALS NULL'],
+   dogru:0, aciklama:"NULL değerler = operatörü ile karşılaştırılamaz! NULL için IS NULL veya IS NOT NULL kullanılır. 'WHERE alan = NULL' her zaman boş döner."},
+
+  {id:17, seviye:'ileri', konu:'JOIN', soru:'Bir tablonun kendisiyle birleştirilmesi nasıl adlandırılır?',
+   kod:`<span class="kw">SELECT</span> a.ad, b.ad <span class="kw">AS</span> yonetici\n<span class="kw">FROM</span> calisanlar a\n<span class="kw">JOIN</span> calisanlar b <span class="kw">ON</span> a.yonetici_id = b.id`,
+   secenekler:['Self Join','Auto Join','Loop Join','Mirror Join'],
+   dogru:0, aciklama:'Self Join, bir tablonun kendisiyle birleştirilmesidir. Hiyerarşik veriler (çalışan-yönetici, kategori-üst kategori) için sık kullanılır.'},
+
+  {id:18, seviye:'ileri', konu:'GROUP BY', soru:'Aşağıdaki sorgunun sonucu ne olur?',
+   kod:`<span class="kw">SELECT</span> <span class="fn">COUNT</span>(DISTINCT kategori) <span class="kw">FROM</span> urunler`,
+   secenekler:[
+     'Kaç farklı kategorinin olduğunu sayar',
+     'Tüm ürünlerin sayısını verir',
+     'Her kategorideki ürün sayısını listeler',
+     'Hata verir'],
+   dogru:0, aciklama:'COUNT(DISTINCT sutun) benzersiz değerleri sayar. Örneğin 1000 üründe 7 farklı kategori varsa sonuç 7 olur.'},
+
+  {id:19, seviye:'ileri', konu:'SELECT', soru:'Bir sorgu sonucuna sütun takma adı vermek için ne kullanılır?',
+   kod:`<span class="kw">SELECT</span> <span class="fn">AVG</span>(skor) ??? ort_skor <span class="kw">FROM</span> urunler`,
+   secenekler:['AS','IS','TO','NAMED'],
+   dogru:0, aciklama:'AS anahtar kelimesi ile sütunlara veya tablolara takma ad (alias) verilir. Sorguyu daha okunabilir yapar.'},
+
+  {id:20, seviye:'ileri', konu:'JOIN', soru:'Aşağıdaki sorguda kaç satır döner?',
+   kod:`<span class="cm">-- Tablo A: 5 satır</span>\n<span class="cm">-- Tablo B: 3 satır</span>\n<span class="cm">-- Eşleşen kayıt: 2</span>\n\n<span class="kw">SELECT</span> * <span class="kw">FROM</span> A\n<span class="kw">INNER JOIN</span> B <span class="kw">ON</span> A.id = B.a_id`,
+   secenekler:['2','5','3','15'],
+   dogru:0, aciklama:'INNER JOIN sadece eşleşen kayıtları getirir. A\'da 5, B\'de 3 satır olsa bile yalnızca 2 eşleşen kayıt döner.'},
+];
+
+let mod = 'calis';
+let aktifSorular = [...sorular];
+let soruIndex = 0;
+let dogru = 0, yanlis = 0, cozulen = 0;
+let sinavSorular = [], sinavDogru = 0, sinavYanlis = 0;
+let timerInterval = null, kalanSure = 120;
+let cevaplandı = false;
+
+// TEMA
+function toggleTheme(){
+  const h=document.documentElement, dark=h.getAttribute('data-theme')==='dark';
+  h.setAttribute('data-theme',dark?'light':'dark');
+  document.getElementById('themeBtn').textContent=dark?'☀️ Açık':'🌙 Koyu';
+}
+
+// MOD
+function setMod(m){
+  mod=m;
+  document.getElementById('tabCalis').classList.toggle('active',m==='calis');
+  document.getElementById('tabSinav').classList.toggle('active',m==='sinav');
+  document.getElementById('filtreBar').style.display=m==='calis'?'flex':'none';
+  document.getElementById('sonucEkrani').classList.remove('show');
+  if(m==='sinav') baslatSinav(); else { stopTimer(); document.getElementById('sinavHeader').style.display='none'; aktifSorular=[...sorular]; soruIndex=0; gosterSoru(); }
+}
+
+// FİLTRE
+function filtrele(f, btn){
+  document.querySelectorAll('.filtre-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  if(f==='hepsi') aktifSorular=[...sorular];
+  else if(['baslangic','orta','ileri'].includes(f)) aktifSorular=sorular.filter(s=>s.seviye===f);
+  else aktifSorular=sorular.filter(s=>s.konu===f);
+  soruIndex=0; gosterSoru();
+}
+
+// SORU GÖSTER
+function gosterSoru(){
+  const wrap=document.getElementById('soruWrap');
+  document.getElementById('sonucEkrani').classList.remove('show');
+  if(soruIndex>=aktifSorular.length){
+    wrap.innerHTML=`<div class="soru-card" style="text-align:center;padding:3rem">
+      <div style="font-size:3rem;margin-bottom:1rem">🎉</div>
+      <div style="font-size:1.2rem;font-weight:700;color:var(--ink);margin-bottom:.5rem">Bu filtredeki tüm sorular bitti!</div>
+      <div style="font-size:.9rem;color:var(--mid);margin-bottom:1.5rem">Başa dön veya farklı bir filtre seç.</div>
+      <button class="btn btn-accent" onclick="soruIndex=0;gosterSoru()">Başa Dön</button>
+    </div>`; return;
+  }
+  const s=aktifSorular[soruIndex];
+  cevaplandı=false;
+  wrap.innerHTML=`
+    <div class="soru-card">
+      <div class="soru-meta">
+        <span class="soru-num">SORU ${soruIndex+1}/${aktifSorular.length}</span>
+        <span class="seviye-badge ${s.seviye}">${s.seviye==='baslangic'?'🟢 Başlangıç':s.seviye==='orta'?'🟡 Orta':'🔴 İleri'}</span>
+        <span class="konu-badge">${s.konu}</span>
+      </div>
+      <div class="soru-text">${s.soru}</div>
+      ${s.kod?`<div class="code-block">${s.kod}</div>`:''}
+      <div class="secenekler" id="secenekler">
+        ${s.secenekler.map((sec,i)=>`
+          <div class="secenek" onclick="cevapla(${i})" id="sec${i}">
+            <div class="secenek-harf">${String.fromCharCode(65+i)}</div>
+            <div class="secenek-text">${sec}</div>
+          </div>`).join('')}
+      </div>
+      <div class="sonuc" id="sonucDiv"></div>
+      <div class="soru-actions">
+        <div class="progress-bar"><div class="progress-fill" style="width:${(soruIndex/aktifSorular.length)*100}%"></div></div>
+        <button class="btn btn-ghost" id="aciklamaBtn" onclick="aciklamaGoster()" style="display:none">💡 Açıklama</button>
+        <button class="btn btn-accent" id="sonrakiBtn" onclick="sonraki()" style="display:none">Sonraki →</button>
+      </div>
+    </div>`;
+  updateStats();
+}
+
+function cevapla(i){
+  if(cevaplandı) return;
+  cevaplandı=true;
+  const s=mod==='calis'?aktifSorular[soruIndex]:sinavSorular[soruIndex];
+  const dogrum=i===s.dogru;
+  document.querySelectorAll('.secenek').forEach((el,idx)=>{
+    el.classList.add('disabled');
+    if(idx===s.dogru) el.classList.add('correct');
+    else if(idx===i && !dogrum) el.classList.add('wrong');
+  });
+  const div=document.getElementById('sonucDiv');
+  div.className='sonuc show '+(dogrum?'dogru':'yanlis');
+  div.innerHTML=`<div class="sonuc-baslik">${dogrum?'✅ Doğru!':'❌ Yanlış!'}</div><div class="sonuc-aciklama">${s.aciklama}</div>`;
+  if(dogrum){ dogru++; if(mod==='sinav')sinavDogru++; }
+  else{ yanlis++; if(mod==='sinav')sinavYanlis++; }
+  cozulen++;
+  document.getElementById('dogruSay').textContent=dogru;
+  document.getElementById('yanlisSay').textContent=yanlis;
+  document.getElementById('sonrakiBtn').style.display='inline-flex';
+  updateStats();
+}
+
+function aciklamaGoster(){
+  const s=aktifSorular[soruIndex];
+  const div=document.getElementById('sonucDiv');
+  div.className='sonuc show';
+  div.style.background='var(--surface2)'; div.style.border='1px solid var(--border)';
+  div.innerHTML=`<div class="sonuc-baslik" style="color:var(--accent)">💡 Açıklama</div><div class="sonuc-aciklama">${s.aciklama}</div>`;
+}
+
+function sonraki(){
+  soruIndex++;
+  if(mod==='sinav' && soruIndex>=sinavSorular.length){ bitirSinav(); return; }
+  if(mod==='sinav'){ document.getElementById('sinavSoru').textContent=`Soru ${soruIndex+1} / ${sinavSorular.length}`; gosterSinavSoru(); }
+  else gosterSoru();
+}
+
+// SINAV
+function baslatSinav(){
+  sinavSorular=[...sorular].sort(()=>Math.random()-.5).slice(0,10);
+  sinavDogru=0; sinavYanlis=0; soruIndex=0; kalanSure=120;
+  document.getElementById('sinavHeader').style.display='flex';
+  document.getElementById('sinavSoru').textContent='Soru 1 / 10';
+  gosterSinavSoru();
+  stopTimer();
+  timerInterval=setInterval(()=>{
+    kalanSure--;
+    const m=Math.floor(kalanSure/60).toString().padStart(2,'0');
+    const s=(kalanSure%60).toString().padStart(2,'0');
+    const el=document.getElementById('sinavTimer');
+    el.textContent=`${m}:${s}`;
+    el.classList.toggle('warning',kalanSure<=30);
+    if(kalanSure<=0){ stopTimer(); bitirSinav(); }
+  },1000);
+}
+
+function gosterSinavSoru(){
+  const s=sinavSorular[soruIndex];
+  cevaplandı=false;
+  document.getElementById('soruWrap').innerHTML=`
+    <div class="soru-card">
+      <div class="soru-meta">
+        <span class="soru-num">SORU ${soruIndex+1}/10</span>
+        <span class="seviye-badge ${s.seviye}">${s.seviye==='baslangic'?'🟢 Başlangıç':s.seviye==='orta'?'🟡 Orta':'🔴 İleri'}</span>
+        <span class="konu-badge">${s.konu}</span>
+      </div>
+      <div class="soru-text">${s.soru}</div>
+      ${s.kod?`<div class="code-block">${s.kod}</div>`:''}
+      <div class="secenekler" id="secenekler">
+        ${s.secenekler.map((sec,i)=>`
+          <div class="secenek" onclick="cevapla(${i})" id="sec${i}">
+            <div class="secenek-harf">${String.fromCharCode(65+i)}</div>
+            <div class="secenek-text">${sec}</div>
+          </div>`).join('')}
+      </div>
+      <div class="sonuc" id="sonucDiv"></div>
+      <div class="soru-actions">
+        <div class="progress-bar"><div class="progress-fill" style="width:${(soruIndex/10)*100}%"></div></div>
+        <button class="btn btn-accent" id="sonrakiBtn" onclick="sonraki()" style="display:none">${soruIndex===9?'Testi Bitir ✓':'Sonraki →'}</button>
+      </div>
+    </div>`;
+}
+
+function bitirSinav(){
+  stopTimer();
+  document.getElementById('sinavHeader').style.display='none';
+  document.getElementById('soruWrap').innerHTML='';
+  const pct=Math.round(sinavDogru/10*100);
+  const emoji=pct>=80?'🏆':pct>=60?'👏':pct>=40?'💪':'📚';
+  const mesaj=pct>=80?'Harika! Çok iyi biliyorsun!':pct>=60?'İyi iş! Biraz daha pratik yapabilirsin.':pct>=40?'Devam et, gelişiyorsun!':'Daha fazla çalışma zamanı!';
+  const gecenSure=120-kalanSure;
+  const dm=Math.floor(gecenSure/60), ds=gecenSure%60;
+  document.getElementById('sonucEmoji').textContent=emoji;
+  document.getElementById('sonucBaslik').textContent=mesaj;
+  document.getElementById('sonucPuan').textContent=`${sinavDogru}/10`;
+  document.getElementById('sonucDetay').textContent=`Başarı oranı: %${pct}`;
+  document.getElementById('sDogru').textContent=sinavDogru;
+  document.getElementById('sYanlis').textContent=sinavYanlis;
+  document.getElementById('sSure').textContent=`${dm}:${ds.toString().padStart(2,'0')}`;
+  document.getElementById('sonucEkrani').classList.add('show');
+}
+
+function tekrarla(){ setMod('sinav'); }
+function stopTimer(){ if(timerInterval){clearInterval(timerInterval);timerInterval=null;} }
+
+function updateStats(){
+  document.getElementById('toplamSoru').textContent=sorular.length;
+  document.getElementById('cozulenSoru').textContent=cozulen;
+  document.getElementById('dogruSoru').textContent=dogru;
+  document.getElementById('yanlisSoru').textContent=yanlis;
+}
+
+gosterSoru();
+updateStats();
+</script>
+
+
+</body></html>
