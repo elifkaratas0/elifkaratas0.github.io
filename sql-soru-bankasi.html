@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- saved from url=(0063)file:///C:/Users/elif.karatas/Downloads/sql-soru-bankasi_2.html -->
-<html lang="tr" data-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="tr" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SQL Soru Bankası</title>
-  <link href="./indexx_files/css2" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     [data-theme="dark"] {
@@ -158,8 +158,8 @@
 <main>
 
   <div class="tabs">
-    <button class="tab active" onclick="setMod(&#39;calis&#39;)" id="tabCalis">📚 Çalışma Modu</button>
-    <button class="tab" onclick="setMod(&#39;sinav&#39;)" id="tabSinav">⏱️ Sınav Modu</button>
+    <button class="tab active" onclick="setMod('calis')" id="tabCalis">📚 Çalışma Modu</button>
+    <button class="tab" onclick="setMod('sinav')" id="tabSinav">⏱️ Sınav Modu</button>
   </div>
 
   <div class="stats-bar">
@@ -192,14 +192,14 @@
 
   <!-- FİLTRE -->
   <div class="filtre-bar" id="filtreBar">
-    <button class="filtre-btn active" onclick="filtrele(&#39;hepsi&#39;,this)">Hepsi</button>
-    <button class="filtre-btn" onclick="filtrele(&#39;baslangic&#39;,this)">🟢 Başlangıç</button>
-    <button class="filtre-btn" onclick="filtrele(&#39;orta&#39;,this)">🟡 Orta</button>
-    <button class="filtre-btn" onclick="filtrele(&#39;ileri&#39;,this)">🔴 İleri</button>
-    <button class="filtre-btn" onclick="filtrele(&#39;SELECT&#39;,this)">SELECT</button>
-    <button class="filtre-btn" onclick="filtrele(&#39;WHERE&#39;,this)">WHERE</button>
-    <button class="filtre-btn" onclick="filtrele(&#39;JOIN&#39;,this)">JOIN</button>
-    <button class="filtre-btn" onclick="filtrele(&#39;GROUP BY&#39;,this)">GROUP BY</button>
+    <button class="filtre-btn active" onclick="filtrele('hepsi',this)">Hepsi</button>
+    <button class="filtre-btn" onclick="filtrele('baslangic',this)">🟢 Başlangıç</button>
+    <button class="filtre-btn" onclick="filtrele('orta',this)">🟡 Orta</button>
+    <button class="filtre-btn" onclick="filtrele('ileri',this)">🔴 İleri</button>
+    <button class="filtre-btn" onclick="filtrele('SELECT',this)">SELECT</button>
+    <button class="filtre-btn" onclick="filtrele('WHERE',this)">WHERE</button>
+    <button class="filtre-btn" onclick="filtrele('JOIN',this)">JOIN</button>
+    <button class="filtre-btn" onclick="filtrele('GROUP BY',this)">GROUP BY</button>
   </div>
 
   <!-- SORU -->
@@ -479,7 +479,7 @@ const sorular = [
     <span class="kw">WHEN</span> skor >= 50 <span class="kw">THEN</span> \'C\'
     <span class="kw">ELSE</span> \'F\'
   <span class="kw">END</span> <span class="kw">AS</span> harf_notu
-<span class="kw">FROM</span> urunler',secenekler:['Her ürün için skora göre harf notu (A/B/C/F)','Sadece A notu alanlar','Tüm skorlar','NULL döner'],dogru:0,aciklama:'CASE WHEN SQL\'deki if-else yapısıdır. Her satır için skora göre harf notu hesaplanır. Veri sınıflandırma için çok yaygın kullanılır.'},,
+<span class="kw">FROM</span> urunler',secenekler:['Her ürün için skora göre harf notu (A/B/C/F)','Sadece A notu alanlar','Tüm skorlar','NULL döner'],dogru:0,aciklama:'CASE WHEN SQL\'deki if-else yapısıdır. Her satır için skora göre harf notu hesaplanır. Veri sınıflandırma için çok yaygın kullanılır.'},
 ];
 
 
@@ -673,6 +673,5 @@ function updateStats(){
 gosterSoru();
 updateStats();
 </script>
-
-
-</body></html>
+</body>
+</html>
