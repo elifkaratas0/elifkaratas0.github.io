@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- saved from url=(0061)file:///C:/Users/elif.karatas/Downloads/sql-soru-bankasi.html -->
+<!-- saved from url=(0063)file:///C:/Users/elif.karatas/Downloads/sql-soru-bankasi_2.html -->
 <html lang="tr" data-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SQL Soru Bankası</title>
-  <link href="./sql-soru-bankasi_files/css2" rel="stylesheet">
+  <link href="./indexx_files/css2" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     [data-theme="dark"] {
@@ -164,7 +164,7 @@
 
   <div class="stats-bar">
     <div class="stat-mini">
-      <div class="stat-mini-val" id="toplamSoru">20</div>
+      <div class="stat-mini-val" id="toplamSoru">0</div>
       <div class="stat-mini-label">Toplam Soru</div>
     </div>
     <div class="stat-mini">
@@ -203,41 +203,7 @@
   </div>
 
   <!-- SORU -->
-  <div id="soruWrap">
-    <div class="soru-card">
-      <div class="soru-meta">
-        <span class="soru-num">SORU 1/20</span>
-        <span class="seviye-badge baslangic">🟢 Başlangıç</span>
-        <span class="konu-badge">SELECT</span>
-      </div>
-      <div class="soru-text">Bir tablodan TÜM sütunları getiren SQL sorgusu hangisidir?</div>
-      
-      <div class="secenekler" id="secenekler">
-        
-          <div class="secenek" onclick="cevapla(0)" id="sec0">
-            <div class="secenek-harf">A</div>
-            <div class="secenek-text">SELECT all FROM tablo</div>
-          </div>
-          <div class="secenek" onclick="cevapla(1)" id="sec1">
-            <div class="secenek-harf">B</div>
-            <div class="secenek-text">SELECT * FROM tablo</div>
-          </div>
-          <div class="secenek" onclick="cevapla(2)" id="sec2">
-            <div class="secenek-harf">C</div>
-            <div class="secenek-text">GET * FROM tablo</div>
-          </div>
-          <div class="secenek" onclick="cevapla(3)" id="sec3">
-            <div class="secenek-harf">D</div>
-            <div class="secenek-text">FETCH all FROM tablo</div>
-          </div>
-      </div>
-      <div class="sonuc" id="sonucDiv"></div>
-      <div class="soru-actions">
-        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-        <button class="btn btn-ghost" id="aciklamaBtn" onclick="aciklamaGoster()" style="display:none">💡 Açıklama</button>
-        <button class="btn btn-accent" id="sonrakiBtn" onclick="sonraki()" style="display:none">Sonraki →</button>
-      </div>
-    </div></div>
+  <div id="soruWrap"></div>
 
   <!-- SONUÇ EKRANI -->
   <div class="sonuc-ekrani" id="sonucEkrani">
@@ -257,122 +223,265 @@
 
 <script>
 const sorular = [
-  // BAŞLANGIÇ - SELECT
-  {id:1, seviye:'baslangic', konu:'SELECT', soru:'Bir tablodan TÜM sütunları getiren SQL sorgusu hangisidir?',
-   kod:'', secenekler:['SELECT all FROM tablo','SELECT * FROM tablo','GET * FROM tablo','FETCH all FROM tablo'],
-   dogru:1, aciklama:'SELECT * FROM tablo ifadesi, tablodaki tüm sütunları getirir. * işareti "hepsi" anlamına gelir.'},
+  // ===== BAŞLANGIÇ (1-34) =====
+  {id:1,seviye:'baslangic',konu:'SELECT',soru:'Bir tablodan TÜM sütunları getiren SQL sorgusu hangisidir?',kod:'',secenekler:['SELECT all FROM tablo','SELECT * FROM tablo','GET * FROM tablo','FETCH all FROM tablo'],dogru:1,aciklama:'SELECT * FROM tablo ifadesi tablodaki tüm sütunları getirir. * işareti "hepsi" anlamına gelir.'},
+  {id:2,seviye:'baslangic',konu:'SELECT',soru:'Sadece "ad" ve "soyad" sütunlarını getiren sorgu hangisidir?',kod:'',secenekler:['SELECT ad, soyad FROM musteriler','SELECT [ad, soyad] FROM musteriler','SHOW ad, soyad FROM musteriler','GET ad AND soyad FROM musteriler'],dogru:0,aciklama:'Belirli sütunları seçmek için sütun adlarını virgülle ayırarak yazarsın: SELECT sutun1, sutun2 FROM tablo'},
+  {id:3,seviye:'baslangic',konu:'SELECT',soru:'Sonuçları sadece 5 satırla sınırlamak için ne kullanılır?',kod:'<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler
+???',secenekler:['LIMIT 5','TOP 5','ROWNUM = 5','FETCH 5'],dogru:0,aciklama:'LIMIT 5 sonuç setini 5 satırla sınırlar. MySQL ve PostgreSQL\'de kullanılır.'},
+  {id:4,seviye:'baslangic',konu:'SELECT',soru:'Tekrar eden değerleri kaldırarak benzersiz kayıtları getiren komut hangisidir?',kod:'<span class="kw">SELECT</span> ??? kategori <span class="kw">FROM</span> urunler',secenekler:['DISTINCT','UNIQUE','DIFFERENT','SINGLE'],dogru:0,aciklama:'DISTINCT anahtar kelimesi tekrar eden satırları kaldırır ve benzersiz değerleri döndürür.'},
+  {id:5,seviye:'baslangic',konu:'SELECT',soru:'Bir sütuna takma ad (alias) vermek için ne kullanılır?',kod:'<span class="kw">SELECT</span> ad ??? isim <span class="kw">FROM</span> musteriler',secenekler:['AS','IS','TO','NAMED'],dogru:0,aciklama:'AS anahtar kelimesi ile sütunlara veya tablolara takma ad verilir. Sorguyu daha okunabilir yapar.'},
+  {id:6,seviye:'baslangic',konu:'WHERE',soru:'İstanbul\'daki müşterileri getiren WHERE koşulu hangisidir?',kod:'<span class="kw">SELECT</span> * <span class="kw">FROM</span> musteriler
+<span class="kw">WHERE</span> ???',secenekler:["sehir = 'Istanbul'","sehir == 'Istanbul'","sehir LIKE Istanbul","sehir IS 'Istanbul'"],dogru:0,aciklama:"WHERE koşulunda eşitlik için tek = kullanılır. Metin değerler tırnak içinde yazılır."},
+  {id:7,seviye:'baslangic',konu:'WHERE',soru:'Kalite skoru 80\'den büyük ürünleri getiren sorgu hangisidir?',kod:'<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler
+<span class="kw">WHERE</span> skor ???',secenekler:['> 80','>= 80','GREATER 80','>> 80'],dogru:0,aciklama:'> operatörü "büyüktür" demektir. 80 dahil değil. 80 dahil olsun istersen >= kullanırsın.'},
+  {id:8,seviye:'baslangic',konu:'WHERE',soru:'Hem "Elektronik" hem "Kitap" kategorisindeki ürünleri getiren sorgu hangisidir?',kod:'<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler
+<span class="kw">WHERE</span> kategori ???',secenekler:["IN ('Elektronik','Kitap')","= 'Elektronik' AND = 'Kitap'","= 'Elektronik' OR 'Kitap'","BETWEEN 'Elektronik' AND 'Kitap'"],dogru:0,aciklama:'IN operatörü birden fazla değeri kontrol etmek için kullanılır.'},
+  {id:9,seviye:'baslangic',konu:'WHERE',soru:'Ürün adı "Pro" ile biten kayıtları getiren sorgu hangisidir?',kod:'<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler
+<span class="kw">WHERE</span> ad ???',secenekler:["LIKE '%Pro'","LIKE 'Pro%'","ENDS WITH 'Pro'","= '*Pro'"],dogru:0,aciklama:"LIKE '%Pro' ifadesinde % işareti 'herhangi bir şey' demektir. '%Pro' = Pro ile biten."},
+  {id:10,seviye:'baslangic',konu:'WHERE',soru:'NULL değer kontrolü için doğru kullanım hangisidir?',kod:'<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler
+<span class="kw">WHERE</span> aciklama ???',secenekler:['IS NULL','= NULL','== NULL','EQUALS NULL'],dogru:0,aciklama:"NULL değerler = operatörü ile karşılaştırılamaz! NULL için IS NULL veya IS NOT NULL kullanılır."},
+  {id:11,seviye:'baslangic',konu:'WHERE',soru:'Skoru 50 ile 80 arasındaki ürünleri getiren sorgu hangisidir?',kod:'<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler
+<span class="kw">WHERE</span> skor ???',secenekler:['BETWEEN 50 AND 80','FROM 50 TO 80','RANGE(50,80)','>= 50 OR <= 80'],dogru:0,aciklama:'BETWEEN...AND ifadesi iki değer arasındaki kayıtları getirir. Her iki sınır dahildir.'},
+  {id:12,seviye:'baslangic',konu:'WHERE',soru:'"ad" sütununda "Ali" geçen tüm kayıtları getiren sorgu hangisidir?',kod:'',secenekler:["WHERE ad LIKE '%Ali%'","WHERE ad = 'Ali'","WHERE ad CONTAINS 'Ali'","WHERE ad IN 'Ali'"],dogru:0,aciklama:"LIKE '%Ali%' ifadesi 'Ali' içeren tüm değerleri bulur. % her iki tarafta da wildcard görevi görür."},
+  {id:13,seviye:'baslangic',konu:'ORDER BY',soru:'Ürünleri fiyata göre büyükten küçüğe sıralamak için ne yazılır?',kod:'<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler
+<span class="kw">ORDER BY</span> fiyat ???',secenekler:['DESC','ASC','DOWN','REVERSE'],dogru:0,aciklama:'DESC (Descending) büyükten küçüğe, ASC (Ascending) küçükten büyüğe sıralar.'},
+  {id:14,seviye:'baslangic',konu:'ORDER BY',soru:'Önce kategoriye göre, sonra isme göre sıralayan sorgu hangisidir?',kod:'',secenekler:['ORDER BY kategori, ad','ORDER BY kategori AND ad','SORT BY kategori, ad','ORDER kategori, ad'],dogru:0,aciklama:'Birden fazla sütuna göre sıralamak için sütunları virgülle ayırırsın. İlk sütun önceliklidir.'},
+  {id:15,seviye:'baslangic',konu:'SELECT',soru:'Tablodaki toplam satır sayısını veren fonksiyon hangisidir?',kod:'<span class="kw">SELECT</span> ???(*) <span class="kw">FROM</span> urunler',secenekler:['COUNT','SUM','TOTAL','NUMBER'],dogru:0,aciklama:'COUNT(*) tablodaki toplam satır sayısını döndürür. NULL değerleri de sayar.'},
+  {id:16,seviye:'baslangic',konu:'SELECT',soru:'En yüksek skoru bulan fonksiyon hangisidir?',kod:'<span class="kw">SELECT</span> ???(skor) <span class="kw">FROM</span> urunler',secenekler:['MAX','HIGHEST','TOP','UPPER'],dogru:0,aciklama:'MAX() en büyük değeri döndürür. MIN() en küçük, AVG() ortalama, SUM() toplam.'},
+  {id:17,seviye:'baslangic',konu:'SELECT',soru:'Tüm ürünlerin ortalama fiyatını hesaplayan fonksiyon hangisidir?',kod:'<span class="kw">SELECT</span> ???(fiyat) <span class="kw">FROM</span> urunler',secenekler:['AVG','MEAN','AVERAGE','MID'],dogru:0,aciklama:'AVG() (Average) sayısal değerlerin ortalamasını hesaplar. NULL değerleri hesaba katmaz.'},
+  {id:18,seviye:'baslangic',konu:'SELECT',soru:'Tüm fiyatların toplamını hesaplayan fonksiyon hangisidir?',kod:'<span class="kw">SELECT</span> ???(fiyat) <span class="kw">FROM</span> urunler',secenekler:['SUM','TOTAL','ADD','PLUS'],dogru:0,aciklama:'SUM() sayısal bir sütundaki tüm değerleri toplar. NULL değerleri yok sayar.'},
+  {id:19,seviye:'baslangic',konu:'WHERE',soru:'İki koşulun ikisinin de sağlanması gerektiğinde kullanılan operatör hangisidir?',kod:'<span class="kw">WHERE</span> skor > 80 ??? kategori = \'Kitap\'',secenekler:['AND','OR','BUT','ALSO'],dogru:0,aciklama:'AND operatörü her iki koşulun da doğru olmasını gerektirir. OR ise herhangi birinin doğru olması yeterlidir.'},
+  {id:20,seviye:'baslangic',konu:'WHERE',soru:'Bir koşulun YANLIŞ olduğu kayıtları getiren operatör hangisidir?',kod:'<span class="kw">WHERE</span> ??? kategori = \'Elektronik\'',secenekler:['NOT','EXCEPT','WITHOUT','EXCLUDE'],dogru:0,aciklama:'NOT operatörü koşulu tersine çevirir. NOT IN, NOT LIKE, NOT BETWEEN gibi kombinasyonlarda da kullanılır.'},
+  {id:21,seviye:'baslangic',konu:'SELECT',soru:'Bir tablodaki sütun sayısını öğrenmek için hangisi kullanılır?',kod:'',secenekler:['information_schema.columns tablosuna bakılır','COUNT(*) kullanılır','COLUMNS() fonksiyonu kullanılır','SELECT # FROM tablo'],dogru:0,aciklama:'Sütun bilgileri için information_schema.columns sistem tablosuna sorgu atılır. Bu tablo veritabanı meta verilerini içerir.'},
+  {id:22,seviye:'baslangic',konu:'SELECT',soru:'Aşağıdakilerden hangisi geçerli bir SQL yorumu (comment) yazım şeklidir?',kod:'',secenekler:['-- Bu bir yorum','## Bu bir yorum','// Bu bir yorum','** Bu bir yorum'],dogru:0,aciklama:'SQL\'de tek satır yorum için -- kullanılır. Çok satırlı yorum için /* ... */ kullanılır.'},
+  {id:23,seviye:'baslangic',konu:'WHERE',soru:'Skoru 50 OLMAYANA kayıtları getiren sorgu hangisidir?',kod:'<span class="kw">WHERE</span> skor ???',secenekler:['<> 50','!= 50','NOT 50','Hem A hem B doğru'],dogru:3,aciklama:'SQL\'de eşit değil için hem <> hem != kullanılabilir. İkisi de aynı anlama gelir.'},
+  {id:24,seviye:'baslangic',konu:'SELECT',soru:'Bir metni büyük harfe çeviren fonksiyon hangisidir?',kod:'<span class="kw">SELECT</span> ???(ad) <span class="kw">FROM</span> musteriler',secenekler:['UPPER','UPPERCASE','CAPS','TOUPPER'],dogru:0,aciklama:'UPPER() metni büyük harfe, LOWER() küçük harfe çevirir.'},
+  {id:25,seviye:'baslangic',konu:'SELECT',soru:'Metin birleştirmek için hangi operatör kullanılır?',kod:'<span class="kw">SELECT</span> ad ??? \' \' ??? soyad <span class="kw">FROM</span> musteriler',secenekler:['||','++','&&','::'],dogru:0,aciklama:'|| operatörü metinleri birleştirir. MySQL\'de CONCAT() fonksiyonu da kullanılabilir.'},
+  {id:26,seviye:'baslangic',konu:'SELECT',soru:'Tarih sütunundan sadece yılı almak için hangi fonksiyon kullanılır?',kod:'<span class="kw">SELECT</span> ???(tarih) <span class="kw">FROM</span> siparisler',secenekler:['YEAR','GETYEAR','DATE_YEAR','EXTRACT_YEAR'],dogru:0,aciklama:'YEAR() fonksiyonu tarihten yıl bilgisini alır. Benzer şekilde MONTH() ve DAY() de kullanılır.'},
+  {id:27,seviye:'baslangic',konu:'WHERE',soru:'Birden fazla değeri kontrol etmek için IN yerine OR kullanılırsa ne olur?',kod:'',secenekler:['Sonuç aynıdır ama IN daha okunaklıdır','IN daha hızlı çalışır','OR hata verir','Farklı sonuçlar döner'],dogru:0,aciklama:'IN ve OR aynı sonucu verir. Ancak IN daha okunaklı ve kısa yazım sağlar. Çok değer varsa IN tercih edilir.'},
+  {id:28,seviye:'baslangic',konu:'ORDER BY',soru:'NULL değerler sıralamada genellikle nerede görünür?',kod:'',secenekler:['ASC\'de en sonda, DESC\'de en başta (veritabanına göre değişir)','Her zaman en başta','Her zaman en sonda','Sıralamaya dahil edilmez'],dogru:0,aciklama:'NULL değerlerin sıralaması veritabanına göre farklılık gösterir. NULLS FIRST veya NULLS LAST ile kontrol edilebilir.'},
+  {id:29,seviye:'baslangic',konu:'SELECT',soru:'Bir metnin uzunluğunu döndüren fonksiyon hangisidir?',kod:'<span class="kw">SELECT</span> ???(\'Merhaba\') <span class="kw">FROM</span> dual',secenekler:['LENGTH','SIZE','LEN','COUNT'],dogru:0,aciklama:'LENGTH() veya LEN() fonksiyonu metin uzunluğunu döndürür. "Merhaba" için 7 döner.'},
+  {id:30,seviye:'baslangic',konu:'SELECT',soru:'Virgülden sonra 2 basamaklı yuvarlama için hangi fonksiyon kullanılır?',kod:'<span class="kw">SELECT</span> ???(fiyat, 2) <span class="kw">FROM</span> urunler',secenekler:['ROUND','DECIMAL','TRUNCATE','FORMAT'],dogru:0,aciklama:'ROUND(sayi, basamak) fonksiyonu sayıyı belirtilen ondalık basamağa yuvarlar.'},
+  {id:31,seviye:'baslangic',konu:'SELECT',soru:'Hangi ifade tabloya yeni satır ekler?',kod:'',secenekler:['INSERT INTO tablo VALUES (...)','ADD INTO tablo VALUES (...)','PUT INTO tablo VALUES (...)','NEW INTO tablo VALUES (...)'],dogru:0,aciklama:'INSERT INTO komutu tabloya yeni veri ekler. Sütun adları belirtilerek veya sırayla değer verilebilir.'},
+  {id:32,seviye:'baslangic',konu:'SELECT',soru:'Hangi ifade tablodaki mevcut veriyi günceller?',kod:'',secenekler:['UPDATE tablo SET sutun = deger WHERE kosul','MODIFY tablo SET sutun = deger','CHANGE tablo sutun = deger','EDIT tablo SET sutun = deger'],dogru:0,aciklama:'UPDATE komutu mevcut kayıtları günceller. WHERE olmadan tüm satırlar güncellenir — dikkatli kullan!'},
+  {id:33,seviye:'baslangic',konu:'SELECT',soru:'Hangi ifade tablodan veri siler?',kod:'',secenekler:['DELETE FROM tablo WHERE kosul','REMOVE FROM tablo WHERE kosul','DROP FROM tablo WHERE kosul','ERASE FROM tablo WHERE kosul'],dogru:0,aciklama:'DELETE FROM komutu satır siler. WHERE olmadan tüm satırlar silinir! TRUNCATE tüm tabloyu hızlıca temizler.'},
+  {id:34,seviye:'baslangic',konu:'SELECT',soru:'Aşağıdakilerden hangisi DDL (Data Definition Language) komutudur?',kod:'',secenekler:['CREATE TABLE','SELECT','INSERT','UPDATE'],dogru:0,aciklama:'DDL komutları veritabanı yapısını tanımlar: CREATE, ALTER, DROP, TRUNCATE. DML ise veri üzerinde işlem yapar: SELECT, INSERT, UPDATE, DELETE.'},
 
-  {id:2, seviye:'baslangic', konu:'SELECT', soru:'Sadece "ad" ve "soyad" sütunlarını getiren sorgu hangisidir?',
-   kod:'', secenekler:['SELECT ad, soyad FROM musteriler','SELECT [ad, soyad] FROM musteriler','SHOW ad, soyad FROM musteriler','GET ad AND soyad FROM musteriler'],
-   dogru:0, aciklama:'Belirli sütunları seçmek için sütun adlarını virgülle ayırarak yazarsın: SELECT sutun1, sutun2 FROM tablo'},
+  // ===== ORTA (35-67) =====
+  {id:35,seviye:'orta',konu:'GROUP BY',soru:'Her kategorideki ürün sayısını hesaplayan sorgu hangisidir?',kod:'',secenekler:['SELECT kategori, COUNT(*) FROM urunler GROUP BY kategori','SELECT kategori, SUM(*) FROM urunler GROUP BY kategori','SELECT COUNT(*) FROM urunler WHERE kategori','SELECT kategori FROM urunler COUNT(*)'],dogru:0,aciklama:'GROUP BY ile verileri gruplarız, COUNT(*) ile her gruptaki satır sayısını sayarız.'},
+  {id:36,seviye:'orta',konu:'GROUP BY',soru:'Ortalama skoru 70\'in üzerinde olan kategorileri getiren sorgu hangisidir?',kod:'<span class="kw">SELECT</span> kategori, <span class="fn">AVG</span>(skor)
+<span class="kw">FROM</span> urunler
+<span class="kw">GROUP BY</span> kategori
+??? <span class="fn">AVG</span>(skor) > <span class="num">70</span>',secenekler:['HAVING','WHERE','FILTER','AND'],dogru:0,aciklama:'GROUP BY sonrası koşul için WHERE değil HAVING kullanılır. WHERE gruplama öncesi, HAVING gruplama sonrası filtreler.'},
+  {id:37,seviye:'orta',konu:'JOIN',soru:'İki tabloyu birleştirmek için kullanılan temel komut hangisidir?',kod:'<span class="kw">SELECT</span> u.ad, k.adi
+<span class="kw">FROM</span> urunler u
+??? kategoriler k <span class="kw">ON</span> u.kategori_id = k.id',secenekler:['INNER JOIN','CONNECT','MERGE','ATTACH'],dogru:0,aciklama:'INNER JOIN iki tablodaki eşleşen kayıtları getirir. ON ile hangi sütunların eşleşeceği belirtilir.'},
+  {id:38,seviye:'orta',konu:'JOIN',soru:'Sol tablodaki tüm kayıtları, sağ tabloda eşleşme olmasa bile getiren JOIN türü hangisidir?',kod:'',secenekler:['LEFT JOIN','INNER JOIN','RIGHT JOIN','FULL JOIN'],dogru:0,aciklama:'LEFT JOIN sol tablodaki TÜM kayıtları getirir. Sağ tabloda eşleşme yoksa NULL döner.'},
+  {id:39,seviye:'orta',konu:'JOIN',soru:'Her iki tablodaki tüm kayıtları getiren JOIN türü hangisidir?',kod:'',secenekler:['FULL OUTER JOIN','INNER JOIN','LEFT JOIN','CROSS JOIN'],dogru:0,aciklama:'FULL OUTER JOIN her iki tablodaki tüm kayıtları döndürür. Eşleşme olmayan yerlerde NULL görünür.'},
+  {id:40,seviye:'orta',konu:'JOIN',soru:'Bir tablonun kendisiyle birleştirilmesi nasıl adlandırılır?',kod:'<span class="kw">SELECT</span> a.ad, b.ad <span class="kw">AS</span> yonetici
+<span class="kw">FROM</span> calisanlar a
+<span class="kw">JOIN</span> calisanlar b <span class="kw">ON</span> a.yonetici_id = b.id',secenekler:['Self Join','Auto Join','Loop Join','Mirror Join'],dogru:0,aciklama:'Self Join bir tablonun kendisiyle birleştirilmesidir. Hiyerarşik veriler için kullanılır.'},
+  {id:41,seviye:'orta',konu:'GROUP BY',soru:'HAVING ile WHERE arasındaki temel fark nedir?',kod:'',secenekler:['WHERE satırları gruplamadan önce, HAVING gruplamadan sonra filtreler','WHERE sayısal, HAVING metin için kullanılır','HAVING daha hızlı çalışır','Aralarında fark yoktur'],dogru:0,aciklama:'WHERE → gruplama öncesi satırları filtreler. HAVING → gruplama sonrası grupları filtreler.'},
+  {id:42,seviye:'orta',konu:'GROUP BY',soru:'COUNT(DISTINCT sutun) ne yapar?',kod:'<span class="kw">SELECT</span> <span class="fn">COUNT</span>(DISTINCT kategori) <span class="kw">FROM</span> urunler',secenekler:['Benzersiz kategori sayısını döndürür','Tüm satır sayısını döndürür','Hata verir','NULL değerleri sayar'],dogru:0,aciklama:'COUNT(DISTINCT sutun) benzersiz değerleri sayar. 1000 üründe 7 farklı kategori varsa sonuç 7 olur.'},
+  {id:43,seviye:'orta',konu:'SUBQUERY',soru:'Aşağıdaki sorgu ne yapar?',kod:'<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler
+<span class="kw">WHERE</span> skor > (<span class="kw">SELECT</span> <span class="fn">AVG</span>(skor) <span class="kw">FROM</span> urunler)',secenekler:['Ortalamanın üzerindeki ürünleri getirir','En yüksek skorlu ürünü getirir','Hata verir','Tüm ürünleri getirir'],dogru:0,aciklama:'Bu bir alt sorgu (subquery) örneğidir. İçteki sorgu önce çalışır, ortalama hesaplanır, sonra dış sorgu filtreler.'},
+  {id:44,seviye:'orta',konu:'SUBQUERY',soru:'Alt sorgu (subquery) nerede kullanılabilir?',kod:'',secenekler:['SELECT, FROM, WHERE ve HAVING içinde','Sadece WHERE içinde','Sadece SELECT içinde','Sadece FROM içinde'],dogru:0,aciklama:'Alt sorgular SELECT, FROM, WHERE ve HAVING bölümlerinde kullanılabilir. Çok yönlü bir yapıdır.'},
+  {id:45,seviye:'orta',konu:'UNION',soru:'İki sorgunun sonuçlarını birleştiren komut hangisidir?',kod:'',secenekler:['UNION','JOIN','MERGE','COMBINE'],dogru:0,aciklama:'UNION iki sorgunun sonuçlarını birleştirir ve tekrar eden satırları kaldırır. UNION ALL tekrar edenleri de gösterir.'},
+  {id:46,seviye:'orta',konu:'UNION',soru:'UNION ve UNION ALL arasındaki fark nedir?',kod:'',secenekler:['UNION tekrar edenleri kaldırır, UNION ALL hepsini gösterir','UNION ALL daha yavaştır','UNION daha fazla sütun getirir','Fark yoktur'],dogru:0,aciklama:'UNION tekrar eden satırları kaldırır (DISTINCT gibi). UNION ALL tüm satırları getirir, daha hızlıdır.'},
+  {id:47,seviye:'orta',konu:'GROUP BY',soru:'Aşağıdaki sorguda hata nedir?',kod:'<span class="kw">SELECT</span> kategori, <span class="fn">COUNT</span>(*)
+<span class="kw">FROM</span> urunler
+<span class="kw">WHERE</span> <span class="fn">COUNT</span>(*) > 10
+<span class="kw">GROUP BY</span> kategori',secenekler:['WHERE içinde aggregate fonksiyon kullanılamaz, HAVING kullanılmalı','GROUP BY yanlış yerde','COUNT(*) hatalı yazılmış','Hata yok'],dogru:0,aciklama:'WHERE içinde COUNT(), SUM(), AVG() gibi aggregate fonksiyonlar kullanılamaz. Bunun yerine HAVING kullanılır.'},
+  {id:48,seviye:'orta',konu:'JOIN',soru:'CROSS JOIN ne yapar?',kod:'',secenekler:['Her iki tablonun kartezyen çarpımını döndürür','Sadece eşleşen kayıtları döndürür','En hızlı JOIN türüdür','İki tablonun farkını döndürür'],dogru:0,aciklama:'CROSS JOIN her satırı diğer tablonun her satırıyla birleştirir. 3 satır × 4 satır = 12 satır döner.'},
+  {id:49,seviye:'orta',konu:'SELECT',soru:'CASE WHEN ifadesi ne işe yarar?',kod:'<span class="kw">SELECT</span> ad,
+  <span class="kw">CASE WHEN</span> skor >= 80 <span class="kw">THEN</span> \'İyi\'
+       <span class="kw">WHEN</span> skor >= 50 <span class="kw">THEN</span> \'Orta\'
+       <span class="kw">ELSE</span> \'Düşük\'
+  <span class="kw">END</span> <span class="kw">AS</span> durum
+<span class="kw">FROM</span> urunler',secenekler:['Koşula göre farklı değer döndürür (if-else gibi)','Sadece NULL değerleri filtreler','Sadece sayısal değerlerle çalışır','Hata verir'],dogru:0,aciklama:'CASE WHEN SQL\'deki if-else yapısıdır. Koşula göre farklı değer döndürmek için kullanılır.'},
+  {id:50,seviye:'orta',konu:'SELECT',soru:'COALESCE fonksiyonu ne yapar?',kod:'<span class="kw">SELECT</span> <span class="fn">COALESCE</span>(telefon, email, \'Bilgi yok\') <span class="kw">FROM</span> musteriler',secenekler:['İlk NULL olmayan değeri döndürür','Tüm değerleri birleştirir','En küçük değeri döndürür','NULL değerleri siler'],dogru:0,aciklama:'COALESCE() listede soldan sağa bakarak ilk NULL olmayan değeri döndürür. Çok kullanışlı bir fonksiyondur.'},
+  {id:51,seviye:'orta',konu:'GROUP BY',soru:'Aşağıdaki sorgunun sonucu nedir?',kod:'<span class="kw">SELECT</span> <span class="fn">COUNT</span>(*) <span class="kw">FROM</span> urunler
+<span class="kw">GROUP BY</span> kategori',secenekler:['Her kategori için ayrı satır sayısı','Toplam ürün sayısı tek satır','Hata verir','Kategorilerin listesi'],dogru:0,aciklama:'GROUP BY olmadan COUNT(*) tek satır döndürür. GROUP BY ile her grup için ayrı COUNT değeri gelir.'},
+  {id:52,seviye:'orta',konu:'JOIN',soru:'ON ve USING arasındaki fark nedir?',kod:'',secenekler:['USING aynı isimli sütunlar için kısa yazım sağlar','ON daha hızlıdır','USING sadece LEFT JOIN ile kullanılır','Fark yoktur'],dogru:0,aciklama:'USING(sutun_adi) her iki tabloda aynı isimli sütun varsa kısa yazım sağlar. ON daha esnektir.'},
+  {id:53,seviye:'orta',konu:'SELECT',soru:'Window fonksiyonu ROW_NUMBER() ne yapar?',kod:'<span class="kw">SELECT</span> ad, skor,
+  <span class="fn">ROW_NUMBER</span>() <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> skor <span class="kw">DESC</span>) <span class="kw">AS</span> siralama
+<span class="kw">FROM</span> urunler',secenekler:['Her satıra benzersiz sıra numarası verir','Satırları siler','Grupları numaralandırır','Hata verir'],dogru:0,aciklama:'ROW_NUMBER() OVER() her satıra benzersiz sıra numarası atar. Sıralama ve sayfalama için çok kullanışlıdır.'},
+  {id:54,seviye:'orta',konu:'SUBQUERY',soru:'EXISTS operatörü ne zaman kullanılır?',kod:'<span class="kw">SELECT</span> * <span class="kw">FROM</span> musteriler m
+<span class="kw">WHERE</span> <span class="kw">EXISTS</span> (
+  <span class="kw">SELECT</span> 1 <span class="kw">FROM</span> siparisler s
+  <span class="kw">WHERE</span> s.musteri_id = m.id
+)',secenekler:['Alt sorguda en az 1 satır varsa TRUE döner','Alt sorgunun ilk değerini karşılaştırır','Her zaman daha yavaştır','Sadece sayısal değerlerle çalışır'],dogru:0,aciklama:'EXISTS alt sorguda en az 1 kayıt varsa TRUE döner. Büyük veri setlerinde IN\'den daha performanslı olabilir.'},
+  {id:55,seviye:'orta',konu:'SELECT',soru:'TRIM fonksiyonu ne yapar?',kod:'<span class="kw">SELECT</span> <span class="fn">TRIM</span>(\'  Merhaba  \')',secenekler:['Baş ve sondaki boşlukları kaldırır','Metni kısaltır','Boşlukları siler','Metni temizler ve NULL döndürür'],dogru:0,aciklama:'TRIM() metnin başındaki ve sonundaki boşlukları kaldırır. LTRIM sadece soldan, RTRIM sadece sağdan kaldırır.'},
+  {id:56,seviye:'orta',konu:'SELECT',soru:'SUBSTRING fonksiyonu ne yapar?',kod:'<span class="kw">SELECT</span> <span class="fn">SUBSTRING</span>(\'Merhaba\', 1, 3)',secenekler:["'Mer' döndürür",'Tüm metni döndürür',"'aba' döndürür","'Mer' döndürür (0\'dan sayılırsa)"],dogru:0,aciklama:'SUBSTRING(metin, başlangıç, uzunluk) metnin bir bölümünü alır. 1. pozisyondan başlayarak 3 karakter: "Mer"'},
+  {id:57,seviye:'orta',konu:'GROUP BY',soru:'Aşağıdaki sorguda GROUP BY olmadan ne olur?',kod:'<span class="kw">SELECT</span> kategori, <span class="fn">COUNT</span>(*)
+<span class="kw">FROM</span> urunler',secenekler:['Hata verir (çoğu veritabanında)','Tüm kategorileri listeler','Sadece ilk satırı döndürür','Sonuç değişmez'],dogru:0,aciklama:'SELECT\'te aggregate olmayan sütun (kategori) varsa GROUP BY zorunludur. Aksi halde çoğu veritabanı hata verir.'},
+  {id:58,seviye:'orta',konu:'UNION',soru:'UNION kullanmak için kaç koşul gereklidir?',kod:'',secenekler:['Sütun sayısı ve veri tipleri eşleşmeli','Tablo isimleri aynı olmalı','WHERE koşulu zorunlu','Sıralama aynı olmalı'],dogru:0,aciklama:'UNION için sütun sayısı ve veri tipleri her iki sorguda da uyumlu olmalıdır. Tablo isimleri farklı olabilir.'},
+  {id:59,seviye:'orta',konu:'SELECT',soru:'DATE_ADD fonksiyonu ne yapar?',kod:'<span class="kw">SELECT</span> <span class="fn">DATE_ADD</span>(siparis_tarihi, <span class="kw">INTERVAL</span> 7 <span class="kw">DAY</span>)
+<span class="kw">FROM</span> siparisler',secenekler:['Tarihe gün ekler','Tarihleri toplar','Gün sayısını döndürür','İki tarih arasındaki farkı bulur'],dogru:0,aciklama:'DATE_ADD() bir tarihe belirtilen süreyi ekler. INTERVAL ile gün, ay, yıl eklenebilir.'},
+  {id:60,seviye:'orta',konu:'JOIN',soru:'Aşağıdaki sorgu kaç satır döndürür?',kod:'<span class="cm">-- A tablosu: 5 satır</span>
+<span class="cm">-- B tablosu: 3 satır, 2 eşleşme</span>
 
-  {id:3, seviye:'baslangic', konu:'WHERE', soru:'Sadece Istanbul\'daki müşterileri getiren WHERE koşulu hangisidir?',
-   kod:`<span class="kw">SELECT</span> * <span class="kw">FROM</span> musteriler\n<span class="kw">WHERE</span> ???`,
-   secenekler:["sehir = 'Istanbul'","sehir == 'Istanbul'","sehir LIKE Istanbul","sehir IS 'Istanbul'"],
-   dogru:0, aciklama:"WHERE koşulunda eşitlik için tek = kullanılır. Metin değerler tırnak içinde yazılır: sehir = 'Istanbul'"},
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> A
+<span class="kw">LEFT JOIN</span> B <span class="kw">ON</span> A.id = B.a_id',secenekler:['5 (A\'nın tüm satırları)','2 (sadece eşleşenler)','3 (B\'nin tüm satırları)','8 (toplam)'],dogru:0,aciklama:'LEFT JOIN A\'nın tüm satırlarını getirir. B\'de eşleşme olmayan 3 satır için NULL döner, toplam 5 satır.'},
+  {id:61,seviye:'orta',konu:'SELECT',soru:'BETWEEN operatörü sınır değerleri dahil eder mi?',kod:'<span class="kw">WHERE</span> skor <span class="kw">BETWEEN</span> 50 <span class="kw">AND</span> 80',secenekler:['Evet, 50 ve 80 dahildir','Hayır, sadece arası','50 dahil, 80 dahil değil','Veritabanına göre değişir'],dogru:0,aciklama:'BETWEEN...AND her iki sınır değerini de dahil eder. yani >= 50 AND <= 80 ile eşdeğerdir.'},
+  {id:62,seviye:'orta',konu:'SUBQUERY',soru:'Correlated subquery nedir?',kod:'',secenekler:['Dış sorguya referans veren alt sorgu','Birden fazla sonuç döndüren alt sorgu','En hızlı alt sorgu türü','Sadece FROM içinde kullanılan alt sorgu'],dogru:0,aciklama:'Correlated subquery dış sorgunun her satırı için yeniden çalışır. Dış sorguya referans verir, bu yüzden yavaş olabilir.'},
+  {id:63,seviye:'orta',konu:'GROUP BY',soru:'Aşağıdaki sorgunun çıktısı nedir?',kod:'<span class="kw">SELECT</span> <span class="fn">MAX</span>(skor) - <span class="fn">MIN</span>(skor) <span class="kw">AS</span> aralik
+<span class="kw">FROM</span> urunler',secenekler:['En yüksek ve en düşük skor arasındaki fark','Tüm skorların toplamı','Ortalama skor','NULL döner'],dogru:0,aciklama:'MAX() - MIN() iki aggregate fonksiyonun farkını hesaplar. Bu veri aralığı (range) için yaygın bir pattern\'dir.'},
+  {id:64,seviye:'orta',konu:'SELECT',soru:'NVL veya ISNULL fonksiyonu ne yapar?',kod:'<span class="kw">SELECT</span> <span class="fn">ISNULL</span>(telefon, \'Bilinmiyor\') <span class="kw">FROM</span> musteriler',secenekler:['NULL değeri başka bir değerle değiştirir','NULL değerleri siler','NULL kontrolü yapar TRUE/FALSE döner','NULL sayısını hesaplar'],dogru:0,aciklama:'ISNULL() veya NVL() NULL değeri belirtilen alternatif değerle değiştirir. COALESCE daha genel bir alternatiftir.'},
+  {id:65,seviye:'orta',konu:'SELECT',soru:'Hangi komut tablonun yapısını değiştirir?',kod:'',secenekler:['ALTER TABLE','MODIFY TABLE','CHANGE TABLE','UPDATE TABLE'],dogru:0,aciklama:'ALTER TABLE komutu mevcut tabloya sütun ekler, siler veya değiştirir. ADD COLUMN, DROP COLUMN, MODIFY COLUMN ile kullanılır.'},
+  {id:66,seviye:'orta',konu:'SELECT',soru:'PRIMARY KEY hakkında hangisi doğrudur?',kod:'',secenekler:['NULL olamaz ve benzersiz olmalı','Sadece tam sayı olabilir','Bir tabloda birden fazla olabilir','NULL olabilir'],dogru:0,aciklama:'PRIMARY KEY iki özelliği zorunlu kılar: NULL olamaz (NOT NULL) ve benzersiz olmalı (UNIQUE). Her tabloda sadece 1 PRIMARY KEY olabilir.'},
+  {id:67,seviye:'orta',konu:'SELECT',soru:'FOREIGN KEY ne işe yarar?',kod:'',secenekler:['İki tablo arasında ilişki kurar ve referans bütünlüğü sağlar','Tabloyu hızlandırır','NULL değerleri engeller','Sütunu şifreler'],dogru:0,aciklama:'FOREIGN KEY başka bir tablonun PRIMARY KEY\'ine referans verir. Referans bütünlüğü (referential integrity) sağlar.'},
 
-  {id:4, seviye:'baslangic', konu:'WHERE', soru:'Kalite skoru 80\'den büyük ürünleri getiren sorgu hangisidir?',
-   kod:`<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler\n<span class="kw">WHERE</span> ???`,
-   secenekler:['skor > 80','skor >= 80','skor GREATER 80','skor >> 80'],
-   dogru:0, aciklama:'> operatörü "büyüktür" demektir. 80\'den büyük demek 80 dahil değil. 80 dahil olsun istersen >= kullanırsın.'},
-
-  {id:5, seviye:'baslangic', konu:'SELECT', soru:'Sonuçları sadece 5 satırla sınırlamak için ne kullanılır?',
-   kod:`<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler\n???`,
-   secenekler:['LIMIT 5','TOP 5','ROWNUM = 5','FETCH 5'],
-   dogru:0, aciklama:'LIMIT 5 ifadesi sonuç setini 5 satırla sınırlar. MySQL ve PostgreSQL\'de kullanılır. SQL Server\'da TOP 5 kullanılır.'},
-
-  // BAŞLANGIÇ - ORDER BY
-  {id:6, seviye:'baslangic', konu:'ORDER BY', soru:'Ürünleri fiyata göre büyükten küçüğe sıralamak için ne yazılır?',
-   kod:`<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler\n<span class="kw">ORDER BY</span> fiyat ???`,
-   secenekler:['DESC','ASC','DOWN','REVERSE'],
-   dogru:0, aciklama:'DESC (Descending) büyükten küçüğe, ASC (Ascending) küçükten büyüğe sıralar. Varsayılan ASC\'dir.'},
-
-  {id:7, seviye:'baslangic', konu:'WHERE', soru:'Hem "Elektronik" hem "Kitap" kategorisindeki ürünleri getiren sorgu hangisidir?',
-   kod:`<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler\n<span class="kw">WHERE</span> kategori ???`,
-   secenekler:["IN ('Elektronik','Kitap')","= 'Elektronik' AND = 'Kitap'","= 'Elektronik' OR 'Kitap'","BETWEEN 'Elektronik' AND 'Kitap'"],
-   dogru:0, aciklama:'IN operatörü, birden fazla değeri kontrol etmek için kullanılır. WHERE kategori IN (\'A\',\'B\') şeklinde yazılır.'},
-
-  // ORTA - GROUP BY
-  {id:8, seviye:'orta', konu:'GROUP BY', soru:'Her kategorideki ürün sayısını hesaplayan sorgu hangisidir?',
-   kod:'', secenekler:[
-     'SELECT kategori, COUNT(*) FROM urunler GROUP BY kategori',
-     'SELECT kategori, SUM(*) FROM urunler GROUP BY kategori',
-     'SELECT COUNT(*) FROM urunler WHERE kategori',
-     'SELECT kategori FROM urunler COUNT(*)'],
-   dogru:0, aciklama:'GROUP BY ile verileri gruplarız, COUNT(*) ile her gruptaki satır sayısını sayarız. Bu ikili çok sık kullanılır!'},
-
-  {id:9, seviye:'orta', konu:'GROUP BY', soru:'Ortalama kalite skoru 70\'in üzerinde olan kategorileri getiren sorgu hangisidir?',
-   kod:`<span class="kw">SELECT</span> kategori, <span class="fn">AVG</span>(skor)\n<span class="kw">FROM</span> urunler\n<span class="kw">GROUP BY</span> kategori\n??? <span class="fn">AVG</span>(skor) > <span class="num">70</span>`,
-   secenekler:['HAVING','WHERE','FILTER','AND'],
-   dogru:0, aciklama:'GROUP BY sonrası koşul için WHERE değil HAVING kullanılır. WHERE gruplama öncesi, HAVING gruplama sonrası filtreler.'},
-
-  {id:10, seviye:'orta', konu:'GROUP BY', soru:'En yüksek skoru bulan fonksiyon hangisidir?',
-   kod:`<span class="kw">SELECT</span> ???(skor) <span class="kw">FROM</span> urunler`,
-   secenekler:['MAX(skor)','HIGHEST(skor)','TOP(skor)','UPPER(skor)'],
-   dogru:0, aciklama:'MAX() en büyük değeri, MIN() en küçük değeri, AVG() ortalamayı, SUM() toplamı, COUNT() sayıyı döndürür.'},
-
-  // ORTA - JOIN
-  {id:11, seviye:'orta', konu:'JOIN', soru:'İki tabloyu birleştirmek için kullanılan temel komut hangisidir?',
-   kod:`<span class="kw">SELECT</span> u.ad, k.kategori_adi\n<span class="kw">FROM</span> urunler u\n??? kategoriler k <span class="kw">ON</span> u.kategori_id = k.id`,
-   secenekler:['INNER JOIN','CONNECT','MERGE','ATTACH'],
-   dogru:0, aciklama:'INNER JOIN iki tablodaki eşleşen kayıtları getirir. ON ile hangi sütunların eşleşeceği belirtilir.'},
-
-  {id:12, seviye:'orta', konu:'JOIN', soru:'Sol tablodaki tüm kayıtları, sağ tabloda eşleşme olmasa bile getiren JOIN türü hangisidir?',
-   kod:'', secenekler:['LEFT JOIN','INNER JOIN','RIGHT JOIN','FULL JOIN'],
-   dogru:0, aciklama:'LEFT JOIN sol tablodaki TÜM kayıtları getirir. Sağ tabloda eşleşme yoksa NULL döner. Çok kullanılan bir JOIN türüdür!'},
-
-  {id:13, seviye:'orta', konu:'WHERE', soru:'Ürün adı "Pro" ile biten kayıtları getiren sorgu hangisidir?',
-   kod:`<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler\n<span class="kw">WHERE</span> ad ???`,
-   secenekler:["LIKE '%Pro'","LIKE 'Pro%'","ENDS WITH 'Pro'","= '*Pro'"],
-   dogru:0, aciklama:"LIKE '%Pro' ifadesinde % işareti 'herhangi bir şey' demektir. '%Pro' = Pro ile biten, 'Pro%' = Pro ile başlayan, '%Pro%' = Pro içeren."},
-
-  // İLERİ
-  {id:14, seviye:'ileri', konu:'JOIN', soru:'Aşağıdaki sorguda ne döner?',
-   kod:`<span class="kw">SELECT</span> k.kategori_adi, <span class="fn">COUNT</span>(u.id) <span class="kw">AS</span> urun_sayisi\n<span class="kw">FROM</span> kategoriler k\n<span class="kw">LEFT JOIN</span> urunler u <span class="kw">ON</span> k.id = u.kategori_id\n<span class="kw">GROUP BY</span> k.kategori_adi\n<span class="kw">ORDER BY</span> urun_sayisi <span class="kw">DESC</span>`,
-   secenekler:[
-     'Her kategorideki ürün sayısı, çoktan aza sıralı (ürünsüz kategoriler de dahil)',
-     'Sadece ürünü olan kategoriler ve ürün sayıları',
-     'Tüm ürünlerin toplam sayısı',
-     'Kategorilerin alfabetik listesi'],
-   dogru:0, aciklama:'LEFT JOIN sayesinde ürünsüz kategoriler de gelir (COUNT=0). GROUP BY kategori bazında gruplar. ORDER BY DESC çoktan aza sıralar.'},
-
-  {id:15, seviye:'ileri', konu:'GROUP BY', soru:'HAVING ile WHERE arasındaki temel fark nedir?',
-   kod:'', secenekler:[
-     'WHERE satırları gruplamadan önce, HAVING gruplamadan sonra filtreler',
-     'WHERE sadece sayısal, HAVING sadece metin için kullanılır',
-     'HAVING daha hızlı çalışır',
-     'Aralarında fark yoktur, ikisi de aynı şeyi yapar'],
-   dogru:0, aciklama:'WHERE → gruplama öncesi satırları filtreler. HAVING → gruplama sonrası grupları filtreler. Aggregate fonksiyonlarla (COUNT, AVG vb.) HAVING kullanılır.'},
-
-  {id:16, seviye:'ileri', konu:'SELECT', soru:'NULL değer kontrolü için doğru kullanım hangisidir?',
-   kod:`<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler\n<span class="kw">WHERE</span> aciklama ???`,
-   secenekler:['IS NULL','= NULL','== NULL','EQUALS NULL'],
-   dogru:0, aciklama:"NULL değerler = operatörü ile karşılaştırılamaz! NULL için IS NULL veya IS NOT NULL kullanılır. 'WHERE alan = NULL' her zaman boş döner."},
-
-  {id:17, seviye:'ileri', konu:'JOIN', soru:'Bir tablonun kendisiyle birleştirilmesi nasıl adlandırılır?',
-   kod:`<span class="kw">SELECT</span> a.ad, b.ad <span class="kw">AS</span> yonetici\n<span class="kw">FROM</span> calisanlar a\n<span class="kw">JOIN</span> calisanlar b <span class="kw">ON</span> a.yonetici_id = b.id`,
-   secenekler:['Self Join','Auto Join','Loop Join','Mirror Join'],
-   dogru:0, aciklama:'Self Join, bir tablonun kendisiyle birleştirilmesidir. Hiyerarşik veriler (çalışan-yönetici, kategori-üst kategori) için sık kullanılır.'},
-
-  {id:18, seviye:'ileri', konu:'GROUP BY', soru:'Aşağıdaki sorgunun sonucu ne olur?',
-   kod:`<span class="kw">SELECT</span> <span class="fn">COUNT</span>(DISTINCT kategori) <span class="kw">FROM</span> urunler`,
-   secenekler:[
-     'Kaç farklı kategorinin olduğunu sayar',
-     'Tüm ürünlerin sayısını verir',
-     'Her kategorideki ürün sayısını listeler',
-     'Hata verir'],
-   dogru:0, aciklama:'COUNT(DISTINCT sutun) benzersiz değerleri sayar. Örneğin 1000 üründe 7 farklı kategori varsa sonuç 7 olur.'},
-
-  {id:19, seviye:'ileri', konu:'SELECT', soru:'Bir sorgu sonucuna sütun takma adı vermek için ne kullanılır?',
-   kod:`<span class="kw">SELECT</span> <span class="fn">AVG</span>(skor) ??? ort_skor <span class="kw">FROM</span> urunler`,
-   secenekler:['AS','IS','TO','NAMED'],
-   dogru:0, aciklama:'AS anahtar kelimesi ile sütunlara veya tablolara takma ad (alias) verilir. Sorguyu daha okunabilir yapar.'},
-
-  {id:20, seviye:'ileri', konu:'JOIN', soru:'Aşağıdaki sorguda kaç satır döner?',
-   kod:`<span class="cm">-- Tablo A: 5 satır</span>\n<span class="cm">-- Tablo B: 3 satır</span>\n<span class="cm">-- Eşleşen kayıt: 2</span>\n\n<span class="kw">SELECT</span> * <span class="kw">FROM</span> A\n<span class="kw">INNER JOIN</span> B <span class="kw">ON</span> A.id = B.a_id`,
-   secenekler:['2','5','3','15'],
-   dogru:0, aciklama:'INNER JOIN sadece eşleşen kayıtları getirir. A\'da 5, B\'de 3 satır olsa bile yalnızca 2 eşleşen kayıt döner.'},
+  // ===== İLERİ (68-100) =====
+  {id:68,seviye:'ileri',konu:'WINDOW',soru:'RANK() ve DENSE_RANK() arasındaki fark nedir?',kod:'',secenekler:['RANK() eşit değerlerde boşluk bırakır, DENSE_RANK() bırakmaz','DENSE_RANK() daha yavaştır','RANK() sadece sayısal değerler için çalışır','Fark yoktur'],dogru:0,aciklama:'RANK(): 1,2,2,4 (3 atlanır). DENSE_RANK(): 1,2,2,3 (boşluk yok). Sıralama senaryosuna göre ikisi de kullanılır.'},
+  {id:69,seviye:'ileri',konu:'WINDOW',soru:'PARTITION BY ne işe yarar?',kod:'<span class="kw">SELECT</span> kategori, ad, skor,
+  <span class="fn">RANK</span>() <span class="kw">OVER</span> (<span class="kw">PARTITION BY</span> kategori <span class="kw">ORDER BY</span> skor <span class="kw">DESC</span>) <span class="kw">AS</span> siralama
+<span class="kw">FROM</span> urunler',secenekler:['Her kategori içinde ayrı sıralama yapar','Tabloyu böler','GROUP BY ile aynı işi yapar','Sadece sayım için kullanılır'],dogru:0,aciklama:'PARTITION BY window fonksiyonunu gruplara böler. Her grup içinde ayrı hesaplama yapılır ama satırlar kaybolmaz (GROUP BY\'dan farkı budur).'},
+  {id:70,seviye:'ileri',konu:'WINDOW',soru:'LAG() fonksiyonu ne yapar?',kod:'<span class="kw">SELECT</span> tarih, gelir,
+  <span class="fn">LAG</span>(gelir) <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> tarih) <span class="kw">AS</span> onceki_gelir
+<span class="kw">FROM</span> gunluk_satis',secenekler:['Önceki satırın değerini getirir','Sonraki satırın değerini getirir','Ortalama hesaplar','Farkı hesaplar'],dogru:0,aciklama:'LAG() önceki satırın değerini, LEAD() sonraki satırın değerini getirir. Dönemsel karşılaştırmalar için çok kullanışlıdır.'},
+  {id:71,seviye:'ileri',konu:'CTE',soru:'CTE (Common Table Expression) nedir?',kod:'<span class="kw">WITH</span> yuksek_skor <span class="kw">AS</span> (
+  <span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler <span class="kw">WHERE</span> skor > 80
+)
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> yuksek_skor',secenekler:['Sorgu içinde geçici sonuç kümesi tanımlar','Kalıcı bir tablo oluşturur','Sadece VIEW oluşturmak için kullanılır','Performansı her zaman artırır'],dogru:0,aciklama:'CTE (WITH ifadesi) sorgu içinde geçici, adlandırılmış bir sonuç kümesi tanımlar. Okunabilirliği artırır, recursive sorgular için gereklidir.'},
+  {id:72,seviye:'ileri',konu:'CTE',soru:'Recursive CTE ne işe yarar?',kod:'',secenekler:['Kendine referans vererek hiyerarşik verileri işler','Döngüsel sorgular oluşturur','Performansı artırır','Sadece sayısal verilerle çalışır'],dogru:0,aciklama:'Recursive CTE kendine referans vererek çalışır. Organizasyon şeması, dosya sistemi gibi hiyerarşik veriler için idealdir.'},
+  {id:73,seviye:'ileri',konu:'INDEX',soru:'Index (dizin) ne işe yarar?',kod:'',secenekler:['Sorgu hızını artırır ama yazma işlemlerini yavaşlatabilir','Her zaman performansı artırır','Veri bütünlüğünü sağlar','Sütunları şifreler'],dogru:0,aciklama:'Index okuma sorgularını hızlandırır ancak INSERT/UPDATE/DELETE işlemlerini yavaşlatır çünkü index de güncellenmesi gerekir.'},
+  {id:74,seviye:'ileri',konu:'INDEX',soru:'Hangi sütuna index koymak en mantıklıdır?',kod:'',secenekler:['Sık WHERE ve JOIN koşulunda kullanılan sütunlar','Tüm sütunlara','Sadece PRIMARY KEY\'e','Nadiren sorgulanan sütunlara'],dogru:0,aciklama:'Index en çok WHERE, JOIN ve ORDER BY\'da kullanılan sütunlarda faydalıdır. Her sütuna index koymak yazma performansını düşürür.'},
+  {id:75,seviye:'ileri',konu:'VIEW',soru:'VIEW (Görünüm) nedir?',kod:'<span class="kw">CREATE VIEW</span> aktif_urunler <span class="kw">AS</span>
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler <span class="kw">WHERE</span> durum = \'onaylı\'',secenekler:['Kaydedilmiş bir sorgu — sanal tablo gibi davranır','Fiziksel olarak veri kopyalar','Sadece okunabilir değildir','Performansı her zaman artırır'],dogru:0,aciklama:'VIEW kaydedilmiş bir sorgudur. Sorgulama kolaylığı, güvenlik ve soyutlama sağlar. Veriyi fiziksel olarak saklamaz.'},
+  {id:76,seviye:'ileri',konu:'VIEW',soru:'Materialized View ile normal View arasındaki fark nedir?',kod:'',secenekler:['Materialized View sonuçları fiziksel olarak saklar','Normal View daha yavaştır','Materialized View güncel verisi her zaman anlıktır','Fark yoktur'],dogru:0,aciklama:'Materialized View sonuçları disk üzerinde saklar, çok hızlı okuma sağlar. Ancak periyodik refresh gerektirir, anlık veri değildir.'},
+  {id:77,seviye:'ileri',konu:'TRANSACTION',soru:'ACID ne anlama gelir?',kod:'',secenekler:['Atomicity, Consistency, Isolation, Durability','Auto Commit, Index, Data','Aggregate, Connect, Insert, Delete','Application, Code, Integration, Deploy'],dogru:0,aciklama:'ACID veritabanı transaction özelliklerini tanımlar: Atomicity (ya hep ya hiç), Consistency (tutarlılık), Isolation (yalıtım), Durability (kalıcılık).'},
+  {id:78,seviye:'ileri',konu:'TRANSACTION',soru:'ROLLBACK komutu ne yapar?',kod:'',secenekler:['Transaction\'ı geri alır','Transaction\'ı kaydeder','Tabloyu siler','Bağlantıyı keser'],dogru:0,aciklama:'ROLLBACK transaction içindeki tüm değişiklikleri geri alır. COMMIT ise kalıcı hale getirir.'},
+  {id:79,seviye:'ileri',konu:'WINDOW',soru:'NTILE(4) fonksiyonu ne yapar?',kod:'<span class="kw">SELECT</span> ad, skor,
+  <span class="fn">NTILE</span>(4) <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> skor) <span class="kw">AS</span> ceyrek
+<span class="kw">FROM</span> urunler',secenekler:['Satırları 4 eşit gruba böler (çeyrekler)','4 satır döndürür','Skoru 4\'e böler','Hata verir'],dogru:0,aciklama:'NTILE(n) satırları n eşit gruba böler. NTILE(4) çeyrek, NTILE(100) yüzdelik dilim hesaplamak için kullanılır.'},
+  {id:80,seviye:'ileri',konu:'SUBQUERY',soru:'Aşağıdaki sorgu ne yapar?',kod:'<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler
+<span class="kw">WHERE</span> kategori_id <span class="kw">NOT IN</span> (
+  <span class="kw">SELECT</span> id <span class="kw">FROM</span> kategoriler
+  <span class="kw">WHERE</span> aktif = 0
+)',secenekler:['Pasif kategorilerdeki ürünleri HARIÇ getirir','Aktif kategorilerdeki ürünleri getirir','Tüm ürünleri getirir','NULL döner'],dogru:0,aciklama:'NOT IN alt sorgunun döndürdüğü listede OLMAYAN kayıtları getirir. NOT EXISTS de aynı işi yapar, genellikle daha performanslıdır.'},
+  {id:81,seviye:'ileri',konu:'WINDOW',soru:'SUM() OVER() ile GROUP BY SUM() arasındaki fark nedir?',kod:'',secenekler:['OVER() satır sayısını korur, GROUP BY satırları gruplar','OVER() daha yavaştır','GROUP BY daha fazla özellik sunar','Fark yoktur'],dogru:0,aciklama:'SUM() OVER() window function her satırı gösterirken toplam hesaplar. GROUP BY SUM() ise satırları gruplar, detay kaybolur.'},
+  {id:82,seviye:'ileri',konu:'INDEX',soru:'Composite (bileşik) index nedir?',kod:'<span class="kw">CREATE INDEX</span> idx_kat_marka
+<span class="kw">ON</span> urunler (kategori, marka)',secenekler:['Birden fazla sütunu kapsayan index','Her tabloda varsayılan olan index','Otomatik oluşturulan index','Sayısal sütunlar için özel index'],dogru:0,aciklama:'Composite index birden fazla sütunu kapsar. (kategori, marka) indexi hem kategori hem de marka sorgularını hızlandırır. Sütun sırası önemlidir!'},
+  {id:83,seviye:'ileri',konu:'CTE',soru:'CTE\'nin subquery\'ye göre avantajı nedir?',kod:'',secenekler:['Daha okunabilir ve aynı sonucu birden fazla yerde kullanabilirsin','Her zaman daha hızlıdır','Daha az bellek kullanır','Sadece JOIN ile kullanılabilir'],dogru:0,aciklama:'CTE okunabilirliği artırır ve aynı sorguyu birden fazla yerde referans edebilirsin. Recursive sorgular için zorunludur.'},
+  {id:84,seviye:'ileri',konu:'WINDOW',soru:'FIRST_VALUE() fonksiyonu ne döndürür?',kod:'<span class="kw">SELECT</span> kategori, ad, skor,
+  <span class="fn">FIRST_VALUE</span>(ad) <span class="kw">OVER</span> (<span class="kw">PARTITION BY</span> kategori <span class="kw">ORDER BY</span> skor <span class="kw">DESC</span>) <span class="kw">AS</span> en_iyi
+<span class="kw">FROM</span> urunler',secenekler:['Her kategoride en yüksek skorlu ürünün adı','İlk eklenen ürünün adı','NULL döner','En düşük skorlu ürünün adı'],dogru:0,aciklama:'FIRST_VALUE() window içindeki ilk satırın değerini döndürür. ORDER BY ile birlikte anlamlıdır. Her kategori için en iyi ürünü görmek gibi.'},
+  {id:85,seviye:'ileri',konu:'INDEX',soru:'Covering Index nedir?',kod:'',secenekler:['Sorgunun ihtiyaç duyduğu tüm sütunları içeren index','En büyük index türü','Otomatik oluşturulan index','Primary key üzerindeki index'],dogru:0,aciklama:'Covering Index sorgunun ihtiyaç duyduğu tüm sütunları içerir. Tabloya erişmeden index üzerinden yanıt verebilir, çok hızlıdır.'},
+  {id:86,seviye:'ileri',konu:'SUBQUERY',soru:'ALL operatörü ne yapar?',kod:'<span class="kw">SELECT</span> * <span class="kw">FROM</span> urunler
+<span class="kw">WHERE</span> skor > <span class="kw">ALL</span> (<span class="kw">SELECT</span> skor <span class="kw">FROM</span> hedef_skorlar)',secenekler:['Alt sorgudaki TÜM değerlerden büyük olanları getirir','Herhangi birinden büyük olanları getirir','Toplamdan büyük olanları getirir','Hata verir'],dogru:0,aciklama:'ALL tüm değerlerle karşılaştırır. skor > ALL(...) en büyük değerden bile büyük olanları getirir. ANY ise herhangi birinden büyük olanları getirir.'},
+  {id:87,seviye:'ileri',konu:'TRANSACTION',soru:'SAVEPOINT ne işe yarar?',kod:'',secenekler:['Transaction içinde geri dönülecek nokta belirler','Veriyi kaydeder','Bağlantıyı güvence altına alır','Index oluşturur'],dogru:0,aciklama:'SAVEPOINT transaction içinde checkpoint oluşturur. ROLLBACK TO savepoint_adi ile o noktaya dönülebilir, tüm transaction geri alınmaz.'},
+  {id:88,seviye:'ileri',konu:'VIEW',soru:'Updatable View nedir?',kod:'',secenekler:['Üzerinde INSERT/UPDATE/DELETE yapılabilen view','Her zaman güncel olan view','Materialized view\'in diğer adı','Sadece JOIN içeren view'],dogru:0,aciklama:'Basit view\'lar üzerinde veri değiştirilebilir (updatable). JOIN, GROUP BY, DISTINCT içeren karmaşık view\'lar genellikle güncellenemez.'},
+  {id:89,seviye:'ileri',konu:'WINDOW',soru:'ROWS BETWEEN ne işe yarar?',kod:'<span class="kw">SELECT</span> tarih, gelir,
+  <span class="fn">AVG</span>(gelir) <span class="kw">OVER</span> (
+    <span class="kw">ORDER BY</span> tarih
+    <span class="kw">ROWS BETWEEN</span> 6 <span class="kw">PRECEDING AND CURRENT ROW</span>
+  ) <span class="kw">AS</span> hareketli_ort
+<span class="kw">FROM</span> satis',secenekler:['Kayan pencere (rolling window) tanımlar — son 7 günün ortalaması','Sadece 6 satır döndürür','Satırları sıralar','Hata verir'],dogru:0,aciklama:'ROWS BETWEEN window fonksiyonunun kapsamını belirler. Bu örnekte mevcut satır dahil önceki 6 satır = 7 günlük kayan ortalama hesaplanır.'},
+  {id:90,seviye:'ileri',konu:'CTE',soru:'Aşağıdaki recursive CTE ne yapar?',kod:'<span class="kw">WITH RECURSIVE</span> hiyerarsi <span class="kw">AS</span> (
+  <span class="kw">SELECT</span> id, ad, ust_id, 1 <span class="kw">AS</span> seviye
+  <span class="kw">FROM</span> calisanlar <span class="kw">WHERE</span> ust_id <span class="kw">IS NULL</span>
+  <span class="kw">UNION ALL</span>
+  <span class="kw">SELECT</span> c.id, c.ad, c.ust_id, h.seviye + 1
+  <span class="kw">FROM</span> calisanlar c
+  <span class="kw">JOIN</span> hiyerarsi h <span class="kw">ON</span> c.ust_id = h.id
+)
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> hiyerarsi',secenekler:['Organizasyon hiyerarşisini tüm seviyeleriyle getirir','Sadece yöneticileri getirir','İlk seviye çalışanları getirir','Hata verir'],dogru:0,aciklama:'Recursive CTE önce kök (üst_id NULL) çalışanları bulur, sonra recursive olarak her seviyeyi ekler. Tüm organizasyon ağacını döndürür.'},
+  {id:91,seviye:'ileri',konu:'INDEX',soru:'Query Optimizer ne yapar?',kod:'',secenekler:['En verimli sorgu planını otomatik seçer','SQL kodunu düzeltir','Index oluşturur','Tabloları optimize eder'],dogru:0,aciklama:'Query Optimizer sorguyu çalıştırmadan önce en verimli yolu (execution plan) belirler. Index kullanımı, join sırası gibi kararları verir.'},
+  {id:92,seviye:'ileri',konu:'WINDOW',soru:'PERCENT_RANK() ne döndürür?',kod:'',secenekler:['0 ile 1 arasında göreli sıralamayı yüzde olarak','Yüzdelik dilimi (0-100)','Satırın pozisyonunu','Grup içindeki oranı'],dogru:0,aciklama:'PERCENT_RANK() 0 ile 1 arasında değer döndürür. İlk satır 0, son satır 1. CUME_DIST() ise kümülatif dağılım verir.'},
+  {id:93,seviye:'ileri',konu:'SUBQUERY',soru:'Lateral Join nedir?',kod:'',secenekler:['Sol tablonun her satırı için sağ tarafı ayrı değerlendirir','Normal JOIN\'in diğer adı','Performansı düşüren JOIN türü','Sadece PostgreSQL\'de çalışır'],dogru:0,aciklama:'LATERAL JOIN sol tarafın her satırını sağ tarafa parametre olarak gönderir. Correlated subquery\'nin JOIN versiyonudur, çok güçlüdür.'},
+  {id:94,seviye:'ileri',konu:'INDEX',soru:'Partial Index nedir?',kod:'<span class="kw">CREATE INDEX</span> idx_hatali
+<span class="kw">ON</span> urunler (id)
+<span class="kw">WHERE</span> durum = \'hatalı\'',secenekler:['Tablonun sadece bir alt kümesi için index','Eksik index','Bozuk index','Kısmi veri içeren tablo'],dogru:0,aciklama:'Partial Index tablonun sadece belirli koşulu sağlayan satırlarını indeksler. Daha küçük, daha hızlı ve daha az yer kaplar.'},
+  {id:95,seviye:'ileri',konu:'TRANSACTION',soru:'Deadlock nedir?',kod:'',secenekler:['İki transaction birbirini beklediği için hiçbirinin ilerleyememesi','Çok yavaş çalışan sorgu','Bozuk index','Disk dolu hatası'],dogru:0,aciklama:'Deadlock iki transaction\'ın birbirinin tuttuğu kaynakları beklediği çıkmaz durumudur. Veritabanı deadlock\'u tespit edip birini geri alır.'},
+  {id:96,seviye:'ileri',konu:'VIEW',soru:'Aşağıdakilerden hangisi VIEW kullanmanın avantajlarından DEĞİLDİR?',kod:'',secenekler:['Her zaman daha hızlı sorgu performansı sağlar','Güvenlik — hassas sütunları gizler','Karmaşık sorguları basitleştirir','Bağımsızlık — tablo yapısı değişse view arayüz sağlar'],dogru:0,aciklama:'VIEW her zaman performansı artırmaz. Materialized VIEW hariç normal VIEW her sorguda yeniden çalışır. Faydaları güvenlik, soyutlama ve basitliktir.'},
+  {id:97,seviye:'ileri',konu:'CTE',soru:'Birden fazla CTE nasıl tanımlanır?',kod:'<span class="kw">WITH</span>
+  ilk_cte <span class="kw">AS</span> (<span class="kw">SELECT</span> ...),
+  ikinci_cte <span class="kw">AS</span> (<span class="kw">SELECT</span> ... <span class="kw">FROM</span> ilk_cte)
+<span class="kw">SELECT</span> * <span class="kw">FROM</span> ikinci_cte',secenekler:['Virgülle ayırarak WITH içinde tanımlanır ve birbirini referans edebilir','Her biri için ayrı WITH yazılır','Mümkün değildir','Parantez içine alınır'],dogru:0,aciklama:'Birden fazla CTE virgülle ayrılır. Sonraki CTE öncekini referans edebilir. Bu zincirleme yapı karmaşık sorguları adım adım yazmayı sağlar.'},
+  {id:98,seviye:'ileri',konu:'WINDOW',soru:'CUMULATIVE SUM nasıl hesaplanır?',kod:'<span class="kw">SELECT</span> tarih, gelir,
+  <span class="fn">SUM</span>(gelir) <span class="kw">OVER</span> (<span class="kw">ORDER BY</span> tarih ??? <span class="kw">UNBOUNDED PRECEDING AND CURRENT ROW</span>) <span class="kw">AS</span> kumulatif
+<span class="kw">FROM</span> satis',secenekler:['ROWS BETWEEN','ALL ROWS','FROM START','CUMULATIVE'],dogru:0,aciklama:'Kümülatif toplam için SUM() OVER(ORDER BY ... ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) kullanılır. Baştan mevcut satıra kadar toplar.'},
+  {id:99,seviye:'ileri',konu:'INDEX',soru:'Bir sorgunun index kullanıp kullanmadığını nasıl kontrol edersin?',kod:'',secenekler:['EXPLAIN veya EXPLAIN ANALYZE komutu ile','SHOW INDEX komutu ile','SELECT * FROM indexes ile','Kontrol edilemez'],dogru:0,aciklama:'EXPLAIN komutu sorgunun execution plan\'ını gösterir. Index Scan görünüyorsa index kullanılıyor demektir. Seq Scan tam tablo taraması demektir.'},
+  {id:100,seviye:'ileri',konu:'WINDOW',soru:'Aşağıdaki sorgu ne hesaplar?',kod:'<span class="kw">SELECT</span> kategori, ad, skor,
+  skor - <span class="fn">AVG</span>(skor) <span class="kw">OVER</span> (<span class="kw">PARTITION BY</span> kategori) <span class="kw">AS</span> ortalama_farki
+<span class="kw">FROM</span> urunler',seceneklers:['Her ürünün kendi kategorisinin ortalamasından farkı','Genel ortalamadan fark','Kategorilerin ortalaması','Hata verir'],secenekler:["Her ürünün kendi kategorisinin ortalamasından farkı","Genel ortalamadan fark","Kategorilerin ortalaması","Hata verir"],dogru:0,aciklama:'Bu sorgu her ürünün kendi kategorisindeki ortalama skordan ne kadar saptığını hesaplar. Anormallik tespiti ve kıyaslama için çok kullanışlıdır.'},
+// ===== YENİ SORULAR (101-150) =====
+  {id:101,seviye:'baslangic',konu:'SELECT',soru:'Bir sütundaki karakterleri küçük harfe çeviren fonksiyon hangisidir?',kod:'<span class="kw">SELECT</span> ???(ad) <span class="kw">FROM</span> musteriler',secenekler:['LOWER','SMALL','LOWERCASE','MINUSCULE'],dogru:0,aciklama:'LOWER() metni küçük harfe çevirir. UPPER() ise büyük harfe. Veri temizleme ve karşılaştırma işlemlerinde sıkça kullanılır.'},
+  {id:102,seviye:'baslangic',konu:'SELECT',soru:'Bir sayıyı tam sayıya yuvarlayan (aşağı) fonksiyon hangisidir?',kod:'<span class="kw">SELECT</span> ???(4.7)',secenekler:['FLOOR','CEIL','ROUND','TRUNC'],dogru:0,aciklama:'FLOOR() sayıyı aşağıya yuvarlar (4.7 → 4). CEIL() yukarıya yuvarlar (4.2 → 5). ROUND() en yakına yuvarlar.'},
+  {id:103,seviye:'baslangic',konu:'SELECT',soru:'Mutlak değer döndüren fonksiyon hangisidir?',kod:'<span class="kw">SELECT</span> ???(-15)',secenekler:['ABS','ABSOLUTE','MOD','POSITIVE'],dogru:0,aciklama:'ABS() sayının mutlak değerini döndürür. ABS(-15) = 15. Negatif sayıları pozitife çevirir.'},
+  {id:104,seviye:'baslangic',konu:'SELECT',soru:'Bölme işleminin kalanını veren operatör hangisidir?',kod:'<span class="kw">SELECT</span> 17 ??? 5',secenekler:['%','MOD','REM','//'],dogru:0,aciklama:'% operatörü (veya MOD fonksiyonu) bölme kalanını verir. 17 % 5 = 2. Çift/tek sayı kontrolü için yaygın kullanılır.'},
+  {id:105,seviye:'baslangic',konu:'DATE',soru:'Bugünün tarihini döndüren fonksiyon hangisidir?',kod:'<span class="kw">SELECT</span> ???',secenekler:['CURRENT_DATE','TODAY()','NOW_DATE','GETDATE_ONLY'],dogru:0,aciklama:'CURRENT_DATE bugünün tarihini döndürür. NOW() ise tarih ve saat birlikte döner. GETDATE() SQL Server\'a özgüdür.'},
+  {id:106,seviye:'baslangic',konu:'DATE',soru:'İki tarih arasındaki gün farkını bulmak için hangisi kullanılır?',kod:'<span class="kw">SELECT</span> ???(bitis_tarihi, baslangic_tarihi)',secenekler:['DATEDIFF','DATE_MINUS','DATERANGE','BETWEEN_DAYS'],dogru:0,aciklama:'DATEDIFF(tarih1, tarih2) iki tarih arasındaki gün sayısını döndürür. Sonuç pozitif veya negatif olabilir.'},
+  {id:107,seviye:'baslangic',konu:'DATE',soru:'Tarihin hangi haftanın gününde olduğunu öğrenmek için ne kullanılır?',kod:'<span class="kw">SELECT</span> ???(tarih)',secenekler:['DAYOFWEEK','WEEKDAY','DAY_NAME','DAYNUM'],dogru:0,aciklama:'DAYOFWEEK() tarihin haftanın kaçıncı günü olduğunu döndürür (1=Pazar, 7=Cumartesi). DAYNAME() gün adını metin olarak döndürür.'},
+  {id:108,seviye:'baslangic',konu:'STRING',soru:'Bir metni belirli sayıda tekrarlayan fonksiyon hangisidir?',kod:'<span class="kw">SELECT</span> ???(\'*\', 5)',secenekler:['REPEAT','REPLICATE','COPY','LOOP'],dogru:0,aciklama:'REPEAT(metin, n) metni n kez tekrarlar. REPEAT("*", 5) = "*****" döndürür. Progress bar gibi görsel çıktılar için kullanılır.'},
+  {id:109,seviye:'baslangic',konu:'STRING',soru:'Bir metni belirli uzunluğa sol taraftan dolduran fonksiyon hangisidir?',kod:'<span class="kw">SELECT</span> ???(\'42\', 5, \'0\')',secenekler:['LPAD','RPAD','PAD','FILL'],dogru:0,aciklama:'LPAD(metin, uzunluk, dolgu) metni soldan doldurur. LPAD("42", 5, "0") = "00042". Fatura no, ürün kodu formatlama için kullanılır.'},
+  {id:110,seviye:'baslangic',konu:'STRING',soru:'Bir metindeki belirli karakteri başka bir karakterle değiştiren fonksiyon hangisidir?',kod:'<span class="kw">SELECT</span> ???(telefon, \'-\', \'\')',secenekler:['REPLACE','CHANGE','SWAP','MODIFY'],dogru:0,aciklama:'REPLACE(metin, aranan, yeni) bulunan tüm eşleşmeleri değiştirir. Telefon numaralarından tire kaldırmak gibi veri temizleme için idealdir.'},
+  {id:111,seviye:'baslangic',konu:'STRING',soru:'Bir metinde belirli bir karakter dizisinin konumunu bulan fonksiyon hangisidir?',kod:'<span class="kw">SELECT</span> ???(\'@\', email)',secenekler:['INSTR / POSITION','FIND','LOCATE_CHAR','SEARCH'],dogru:0,aciklama:'INSTR() veya POSITION() metinde aranan karakterin konumunu döndürür. "test@mail.com"da @ pozisyonu 5\'tir.'},
+  {id:112,seviye:'baslangic',konu:'SELECT',soru:'Hangi komut yeni bir tablo oluşturur?',kod:'',secenekler:['CREATE TABLE urunler (id INT, ad VARCHAR(100))','MAKE TABLE urunler','NEW TABLE urunler','BUILD TABLE urunler'],dogru:0,aciklama:'CREATE TABLE komutu yeni tablo oluşturur. Sütun adları ve veri tipleri parantez içinde belirtilir.'},
+  {id:113,seviye:'baslangic',konu:'SELECT',soru:'Hangi komut bir tabloyu tamamen siler (yapısıyla birlikte)?',kod:'',secenekler:['DROP TABLE','DELETE TABLE','REMOVE TABLE','ERASE TABLE'],dogru:0,aciklama:'DROP TABLE tabloyu tüm verisi ve yapısıyla birlikte siler. TRUNCATE sadece verileri siler, tablo yapısı kalır. DELETE koşullu satır siler.'},
+  {id:114,seviye:'baslangic',konu:'SELECT',soru:'VARCHAR ve CHAR veri tipleri arasındaki fark nedir?',kod:'',secenekler:['VARCHAR değişken uzunluklu, CHAR sabit uzunluklu metin saklar','VARCHAR daha hızlıdır','CHAR daha fazla veri saklar','Fark yoktur'],dogru:0,aciklama:'CHAR(10) her zaman 10 karakter yer kaplar (boşlukla doldurur). VARCHAR(10) en fazla 10 karakter saklar, gerçek uzunluk kadar yer kaplar.'},
+  {id:115,seviye:'baslangic',konu:'WHERE',soru:'Birden fazla OR koşulunu kısaltmanın en iyi yolu hangisidir?',kod:'<span class="kw">WHERE</span> sehir = \'Ankara\' <span class="kw">OR</span> sehir = \'Istanbul\' <span class="kw">OR</span> sehir = \'Izmir\'',secenekler:["WHERE sehir IN ('Ankara','Istanbul','Izmir')","WHERE sehir = ALL('Ankara','Istanbul','Izmir')","WHERE sehir BETWEEN 'Ankara' AND 'Izmir'","WHERE sehir CONTAINS ('Ankara','Istanbul','Izmir')"],dogru:0,aciklama:'IN operatörü birden fazla OR koşulunu kısaltır. Okunabilirliği artırır ve aynı sonucu verir.'},
+  {id:116,seviye:'orta',konu:'WINDOW',soru:'CUME_DIST() fonksiyonu ne döndürür?',kod:'',secenekler:['Kümülatif dağılım — değerin yüzde kaçının bu değere eşit veya küçük olduğu','Toplam satır sayısı','Sıra numarası','Yüzdelik dilim 0-100 arası'],dogru:0,aciklama:'CUME_DIST() 0 ile 1 arasında kümülatif dağılım döndürür. Değerin sıralamasının toplam içindeki oranını gösterir.'},
+  {id:117,seviye:'orta',konu:'JOIN',soru:'3 tabloyu birleştiren sorgu nasıl yazılır?',kod:'<span class="kw">SELECT</span> u.ad, k.adi, m.adi
+<span class="kw">FROM</span> urunler u
+<span class="kw">JOIN</span> kategoriler k <span class="kw">ON</span> u.kategori_id = k.id
+??? markalar m <span class="kw">ON</span> u.marka_id = m.id',secenekler:['JOIN','AND JOIN','ALSO JOIN','THEN JOIN'],dogru:0,aciklama:'Birden fazla JOIN zincirleme yazılır. Her JOIN kendi ON koşuluyla birlikte gelir. Teorik olarak sınır yoktur.'},
+  {id:118,seviye:'orta',konu:'SUBQUERY',soru:'IN ile EXISTS performans farkı nedir?',kod:'',secenekler:['EXISTS büyük veri setlerinde genellikle daha hızlıdır','IN her zaman daha hızlıdır','Fark yoktur','EXISTS daha yavaştır'],dogru:0,aciklama:'EXISTS alt sorguda ilk eşleşmeyi bulunca durur. IN tüm listeyi döndürür. Büyük tablolarda EXISTS daha iyi performans gösterir.'},
+  {id:119,seviye:'orta',konu:'GROUP BY',soru:'Aşağıdaki sorguda GROUP BY olmadan ne olur?',kod:'<span class="kw">SELECT</span> durum, <span class="fn">COUNT</span>(*), <span class="fn">AVG</span>(skor)
+<span class="kw">FROM</span> urunler',secenekler:['Hata verir — durum sütunu GROUP BY veya aggregate içinde olmalı','Tüm satırları döndürür','Sadece ilk satırı döndürür','Sonuç değişmez'],dogru:0,aciklama:'Aggregate olmayan sütun (durum) SELECT\'te varsa GROUP BY zorunludur. MySQL bu kuralı bazen görmezden gelir ama diğer veritabanları hata verir.'},
+  {id:120,seviye:'orta',konu:'STRING',soru:'Email adresinden domain kısmını çıkaran sorgu hangisidir?',kod:'',secenekler:["SUBSTRING(email, POSITION('@' IN email) + 1)","SPLIT(email, '@', 2)","DOMAIN(email)","RIGHT(email, '@')"],dogru:0,aciklama:"POSITION('@' IN email) @ işaretinin konumunu bulur. SUBSTRING ile @ sonrasını alırız. String fonksiyonlarını birleştirmek güçlü veri dönüşümleri sağlar."},
+  {id:121,seviye:'orta',konu:'DATE',soru:'Son 30 günün verilerini getiren sorgu hangisidir?',kod:'<span class="kw">SELECT</span> * <span class="kw">FROM</span> siparisler
+<span class="kw">WHERE</span> tarih ???',secenekler:['> CURRENT_DATE - INTERVAL 30 DAY','= LAST 30 DAYS','BETWEEN TODAY AND -30','> DATE_SUB(30)'],dogru:0,aciklama:'CURRENT_DATE - INTERVAL 30 DAY 30 gün öncesini hesaplar. DATE_SUB(CURRENT_DATE, INTERVAL 30 DAY) da aynı işi yapar.'},
+  {id:122,seviye:'orta',konu:'PERFORMANCE',soru:'N+1 sorgu problemi nedir?',kod:'',secenekler:['1 sorgu + her satır için 1 sorgu — JOIN ile çözülür','Çok fazla index kullanımı','NULL değerlerin fazlalığı','Tablo çok büyük olduğunda ortaya çıkar'],dogru:0,aciklama:'N+1 problemi: 1 sorgu N kayıt getirir, sonra her kayıt için 1 sorgu daha atılır = N+1 sorgu. JOIN veya subquery ile tek sorguda çözülür.'},
+  {id:123,seviye:'orta',konu:'SELECT',soru:'GENERATED ALWAYS AS ne işe yarar?',kod:'<span class="kw">CREATE TABLE</span> urunler (
+  fiyat DECIMAL,
+  kdv DECIMAL,
+  toplam DECIMAL <span class="kw">GENERATED ALWAYS AS</span> (fiyat + kdv)
+)',secenekler:['Otomatik hesaplanan sanal sütun oluşturur','Varsayılan değer atar','Otomatik artan sayı oluşturur','Şifreli sütun oluşturur'],dogru:0,aciklama:'GENERATED ALWAYS AS diğer sütunlardan otomatik hesaplanan sanal (computed) sütun oluşturur. Her zaman güncel değer döner.'},
+  {id:124,seviye:'orta',konu:'SELECT',soru:'DEFAULT kısıtlaması ne işe yarar?',kod:'<span class="kw">CREATE TABLE</span> urunler (
+  durum VARCHAR(20) <span class="kw">DEFAULT</span> \'beklemede\'
+)',secenekler:['Değer girilmezse varsayılan değeri kullanır','NULL değeri engeller','Benzersizlik sağlar','Veri tipini belirler'],dogru:0,aciklama:'DEFAULT INSERT sırasında değer belirtilmezse otomatik olarak varsayılan değeri kullanır. Sık kullanılan değerler için pratiktir.'},
+  {id:125,seviye:'orta',konu:'SELECT',soru:'CHECK kısıtlaması ne işe yarar?',kod:'<span class="kw">CREATE TABLE</span> urunler (
+  skor INT <span class="kw">CHECK</span> (skor <span class="kw">BETWEEN</span> 0 <span class="kw">AND</span> 100)
+)',secenekler:['Sütuna girilecek değerlere kural koyar','Değeri otomatik hesaplar','Tabloya index ekler','Foreign key oluşturur'],dogru:0,aciklama:'CHECK kısıtlaması belirli bir koşulu zorunlu kılar. Koşulu sağlamayan değer eklenmez. Veri bütünlüğü için önemlidir.'},
+  {id:126,seviye:'orta',konu:'SELECT',soru:'UNIQUE kısıtlaması PRIMARY KEY\'den nasıl farklıdır?',kod:'',secenekler:['UNIQUE NULL\'a izin verir ve bir tabloda birden fazla olabilir, PRIMARY KEY ikisine de izin vermez','PRIMARY KEY daha hızlıdır','UNIQUE sadece sayısal değerler için çalışır','Fark yoktur'],dogru:0,aciklama:'PRIMARY KEY: NULL olamaz, tabloda sadece 1 tane. UNIQUE: NULL olabilir (bazı veritabanlarında birden fazla NULL), tabloda birden fazla UNIQUE olabilir.'},
+  {id:127,seviye:'orta',konu:'NORMALIZATION',soru:'1. Normal Form (1NF) ne gerektirir?',kod:'',secenekler:['Her hücre tek değer içermeli, tekrar eden gruplar olmamalı','Tüm sütunlar birbirine bağımlı olmalı','Foreign key zorunlu','Tabloda en az 3 sütun olmalı'],dogru:0,aciklama:'1NF: Her hücre atomik (bölünemez) tek değer içermeli. Bir hücrede "Ali, Veli" gibi liste değerleri 1NF ihlalidir.'},
+  {id:128,seviye:'orta',konu:'NORMALIZATION',soru:'2. Normal Form (2NF) ne gerektirir?',kod:'',secenekler:['1NF + tüm sütunlar PRIMARY KEY\'in tamamına bağımlı olmalı','1NF + Foreign key zorunlu','1NF + sütun sayısı sınırı','1NF + NULL yasak'],dogru:0,aciklama:'2NF: 1NF\'yi sağlar + bileşik PRIMARY KEY varsa tüm sütunlar anahtarın tamamına bağlı olmalı, kısmi bağımlılık olmamalı.'},
+  {id:129,seviye:'orta',konu:'NORMALIZATION',soru:'Normalizasyonun temel amacı nedir?',kod:'',secenekler:['Veri tekrarını azaltmak ve anomalileri önlemek','Sorguları hızlandırmak','Tablo sayısını azaltmak','Index oluşturmak'],dogru:0,aciklama:'Normalizasyon veri tekrarını (redundancy) azaltır ve güncelleme/silme/ekleme anomalilerini önler. Ancak çok fazla normalizasyon performansı düşürebilir.'},
+  {id:130,seviye:'orta',konu:'NORMALIZATION',soru:'Denormalizasyon ne zaman tercih edilir?',kod:'',secenekler:['Okuma performansı kritik olduğunda — JOIN maliyetinden kaçınmak için','Her zaman tercih edilir','Veri bütünlüğü önemli olduğunda','Tablo çok küçük olduğunda'],dogru:0,aciklama:'Denormalizasyon okuma performansını artırmak için bilinçli olarak tekrar eden veri saklamaktır. Raporlama ve analitik sistemlerde yaygındır.'},
+  {id:131,seviye:'ileri',konu:'STORED PROCEDURE',soru:'Stored Procedure nedir?',kod:'',secenekler:['Veritabanında saklanan ve adıyla çağrılabilen SQL kod bloğu','Geçici tablo','Otomatik çalışan sorgu','Index türü'],dogru:0,aciklama:'Stored Procedure veritabanında saklanan, parametreli SQL kod bloğudur. CALL veya EXEC ile çağrılır. Kod tekrarını azaltır ve güvenlik sağlar.'},
+  {id:132,seviye:'ileri',konu:'STORED PROCEDURE',soru:'Stored Procedure ve Function arasındaki temel fark nedir?',kod:'',secenekler:['Function değer döndürmek zorunda, Procedure döndürmeyebilir ve DML içerebilir','Function daha hızlıdır','Procedure sadece SELECT içerebilir','Fark yoktur'],dogru:0,aciklama:'Function mutlaka değer döndürür ve SELECT içinde kullanılabilir. Procedure değer döndürmeyebilir, INSERT/UPDATE/DELETE içerebilir, transaction yönetebilir.'},
+  {id:133,seviye:'ileri',konu:'TRIGGER',soru:'Trigger nedir?',kod:'',secenekler:['Belirli bir olay gerçekleştiğinde otomatik çalışan kod bloğu','Manuel çalıştırılan procedure','Index türü','Backup mekanizması'],dogru:0,aciklama:'Trigger INSERT, UPDATE veya DELETE gibi bir olay gerçekleştiğinde otomatik devreye girer. Audit log, otomatik hesaplama için kullanılır.'},
+  {id:134,seviye:'ileri',konu:'TRIGGER',soru:'BEFORE ve AFTER Trigger arasındaki fark nedir?',kod:'',secenekler:['BEFORE işlemden önce, AFTER işlemden sonra çalışır','BEFORE daha hızlıdır','AFTER daha güvenlidir','Sadece DELETE için fark vardır'],dogru:0,aciklama:'BEFORE Trigger veri değişmeden önce çalışır (veriyi değiştirebilir). AFTER Trigger değişiklik sonrası çalışır (log kayıt için ideal).'},
+  {id:135,seviye:'ileri',konu:'PERFORMANCE',soru:'Query Execution Plan\'da "Seq Scan" ne anlama gelir?',kod:'',secenekler:['Tablonun tamamı satır satır taranıyor — index kullanılmıyor','Sorgu optimize edilmiş','Paralel çalışıyor','Index kullanılıyor'],dogru:0,aciklama:'Sequential Scan (Seq Scan) tablonun baştan sona tarandığı anlamına gelir. Küçük tablolarda normal, büyük tablolarda index eklemeyi düşün.'},
+  {id:136,seviye:'ileri',konu:'PERFORMANCE',soru:'Hangi durumda index işe YARAMAZ?',kod:'',secenekler:['WHERE\'de fonksiyon kullanıldığında: WHERE UPPER(ad) = \'ALI\'','Büyük tablolarda','JOIN\'lerde','ORDER BY\'da'],dogru:0,aciklama:"WHERE UPPER(ad) = 'ALI' gibi sütuna fonksiyon uygulanırsa index kullanılamaz. Bunun yerine Functional Index oluşturulabilir veya veri normalize edilebilir."},
+  {id:137,seviye:'ileri',konu:'PERFORMANCE',soru:'SELECT * yerine sütun adlarını belirtmenin avantajı nedir?',kod:'',secenekler:['Daha az veri transfer edilir ve covering index kullanılabilir','Daha hızlı yazılır','NULL değerleri filtreler','Sıralama daha iyi çalışır'],dogru:0,aciklama:'SELECT * tüm sütunları getirir. İhtiyaç yoksa gereksiz veri aktarımı olur. Spesifik sütunlar covering index ile daha hızlı sonuç verir.'},
+  {id:138,seviye:'ileri',konu:'PERFORMANCE',soru:'Connection Pool ne işe yarar?',kod:'',secenekler:['Veritabanı bağlantılarını yeniden kullanarak performansı artırır','Sorguları önbelleğe alır','Index oluşturur','Backup alır'],dogru:0,aciklama:'Connection Pool önceden açılmış bağlantıları havuzda saklar. Her istek için yeni bağlantı açmak yerine havuzdan alır — çok daha hızlıdır.'},
+  {id:139,seviye:'ileri',konu:'CTE',soru:'Recursive CTE\'de UNION ALL yerine UNION kullanılırsa ne olur?',kod:'',secenekler:['Performans düşer çünkü tekrar kontrol için ek işlem gerekir','Hata verir','Daha hızlı çalışır','Fark yoktur'],dogru:0,aciklama:'Recursive CTE\'de UNION ALL tercih edilir çünkü tekrar eden satır kontrolü yapmaz ve daha hızlıdır. UNION her adımda tekrar kontrolü yapar.'},
+  {id:140,seviye:'ileri',konu:'INDEX',soru:'Bitmap Index ne zaman kullanılır?',kod:'',secenekler:['Az sayıda benzersiz değeri olan sütunlarda (düşük cardinality)','Çok sayıda benzersiz değeri olan sütunlarda','Her sütunda','Sadece sayısal sütunlarda'],dogru:0,aciklama:'Bitmap Index az değer alan sütunlarda (cinsiyet, durum, şehir gibi) etkilidir. Çok benzersiz değerde (isim, email) B-tree index daha iyidir.'},
+  {id:141,seviye:'ileri',konu:'WINDOW',soru:'UNBOUNDED FOLLOWING ne anlama gelir?',kod:'<span class="kw">ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING</span>',secenekler:['Mevcut satırdan sonuna kadar tüm satırlar','Sonsuz satır','Sadece son satır','Belirtilmemiş aralık'],dogru:0,aciklama:'UNBOUNDED FOLLOWING partition\'ın sonuna kadar demektir. ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING = mevcut satırdan sona kadar.'},
+  {id:142,seviye:'ileri',konu:'NORMALIZATION',soru:'3. Normal Form (3NF) ne gerektirir?',kod:'',secenekler:['2NF + non-key sütunlar birbirine değil sadece primary key\'e bağımlı olmalı','2NF + foreign key zorunlu','2NF + NULL yasak','2NF + index zorunlu'],dogru:0,aciklama:'3NF: 2NF\'yi sağlar + geçişli bağımlılık (transitive dependency) olmamalı. Non-key sütunlar sadece primary key\'e bağlı olmalı, başka non-key sütuna değil.'},
+  {id:143,seviye:'ileri',konu:'STORED PROCEDURE',soru:'OUT parametresi ne işe yarar?',kod:'',secenekler:['Procedure\'dan değer döndürmek için kullanılır','Giriş değeri almak için kullanılır','Hem giriş hem çıkış için kullanılır','Hata döndürür'],dogru:0,aciklama:'IN parametresi giriş, OUT parametresi çıkış, INOUT ise hem giriş hem çıkış içindir. OUT ile procedure birden fazla değer döndürebilir.'},
+  {id:144,seviye:'ileri',konu:'TRIGGER',soru:'INSTEAD OF Trigger ne işe yarar?',kod:'',secenekler:['Asıl işlem yerine çalışır — view üzerinde DML için kullanılır','İşlemden sonra çalışır','Hata durumunda devreye girer','Backup alır'],dogru:0,aciklama:'INSTEAD OF Trigger asıl INSERT/UPDATE/DELETE yerine çalışır. Güncellenemeyen view\'lar üzerinde veri değiştirmek için kullanılır.'},
+  {id:145,seviye:'ileri',konu:'PERFORMANCE',soru:'Materialized View ne zaman yenilenir?',kod:'',secenekler:['Manuel REFRESH veya schedule ile — otomatik değil','Her sorguda','Her INSERT\'te','Her gün gece yarısı'],dogru:0,aciklama:'Materialized View otomatik yenilenmez. REFRESH MATERIALIZED VIEW komutuyla veya zamanlanmış görevle yenilenir. Bu yüzden veriler anlık olmayabilir.'},
+  {id:146,seviye:'ileri',konu:'SELECT',soru:'MERGE (UPSERT) komutu ne yapar?',kod:'<span class="kw">MERGE INTO</span> hedef <span class="kw">USING</span> kaynak
+<span class="kw">ON</span> eslesme_kosulu
+<span class="kw">WHEN MATCHED THEN UPDATE</span> ...
+<span class="kw">WHEN NOT MATCHED THEN INSERT</span> ...',secenekler:['Eşleşirse günceller, eşleşmezse ekler','Sadece günceller','Sadece ekler','Siler ve yeniden ekler'],dogru:0,aciklama:'MERGE (UPSERT) tek komutla hem INSERT hem UPDATE yapar. Eşleşen kayıtları günceller, eşleşmeyenleri ekler. ETL süreçlerinde çok kullanılır.'},
+  {id:147,seviye:'ileri',konu:'PERFORMANCE',soru:'Partitioning ne işe yarar?',kod:'',secenekler:['Büyük tabloyu parçalara böler — sorgu performansını ve yönetimi iyileştirir','Tabloyu şifreler','Index oluşturur','Backup alır'],dogru:0,aciklama:'Partitioning büyük tabloyu mantıksal parçalara böler (ay, yıl, bölge gibi). Sorgu sadece ilgili partition\'ı tarar, çok daha hızlı çalışır.'},
+  {id:148,seviye:'ileri',konu:'SELECT',soru:'JSON verisi SQL\'de nasıl sorgulanır?',kod:'<span class="kw">SELECT</span> veri->\'$.ad\' <span class="kw">FROM</span> tablo',secenekler:['JSON operatörleri veya JSON_VALUE() fonksiyonu ile','Sadece metin olarak okunabilir','JSON SQL\'de kullanılamaz','SPLIT fonksiyonu ile'],dogru:0,aciklama:'Modern veritabanları JSON sütunlarını destekler. MySQL\'de ->, ->>, JSON_VALUE() ile; PostgreSQL\'de -> ve ->> operatörleriyle JSON içi erişilir.'},
+  {id:149,seviye:'ileri',konu:'PERFORMANCE',soru:'EXPLAIN ANALYZE ne döndürür?',kod:'',secenekler:['Planı gösterir VE gerçekten çalıştırarak gerçek süreleri ölçer','Sadece plan gösterir, çalıştırmaz','Hataları listeler','Index önerileri sunar'],dogru:0,aciklama:'EXPLAIN sadece planı gösterir. EXPLAIN ANALYZE sorguyu gerçekten çalıştırır ve her adımın gerçek süresini ölçer. Performans sorunlarını bulmak için idealdir.'},
+  {id:150,seviye:'ileri',konu:'SELECT',soru:'Aşağıdaki sorguda ne döner?',kod:'<span class="kw">SELECT</span> 
+  <span class="kw">CASE</span> 
+    <span class="kw">WHEN</span> skor >= 90 <span class="kw">THEN</span> \'A\'
+    <span class="kw">WHEN</span> skor >= 70 <span class="kw">THEN</span> \'B\'
+    <span class="kw">WHEN</span> skor >= 50 <span class="kw">THEN</span> \'C\'
+    <span class="kw">ELSE</span> \'F\'
+  <span class="kw">END</span> <span class="kw">AS</span> harf_notu
+<span class="kw">FROM</span> urunler',secenekler:['Her ürün için skora göre harf notu (A/B/C/F)','Sadece A notu alanlar','Tüm skorlar','NULL döner'],dogru:0,aciklama:'CASE WHEN SQL\'deki if-else yapısıdır. Her satır için skora göre harf notu hesaplanır. Veri sınıflandırma için çok yaygın kullanılır.'},,
 ];
+
 
 let mod = 'calis';
 let aktifSorular = [...sorular];
